@@ -13,9 +13,17 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+    companion object {
+        lateinit var instance: MainActivity
+            private set
+    }
+
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        instance = this
         setContentView(R.layout.activity_main)
     }
 
