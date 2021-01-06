@@ -7,6 +7,12 @@ class Board {
     companion object {
         var gameBoard = arrayOf<Array<Figure>>()
 
+        fun swap(x1: Int, y1: Int, x2: Int, y2: Int) {
+            var tmp = gameBoard[x1][y1]
+            gameBoard[x2][y2] = tmp
+            gameBoard[x1][y1] = gameBoard[x2][y2]
+        }
+
         fun initialize() {
             for (i in 0..7) {
                 var array = arrayOf<Figure>()

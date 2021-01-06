@@ -32,23 +32,21 @@ abstract class Figure : FigureInterface {
         )
     }
 
-    fun show(canvas: Canvas, width: Int, context: Context, row: Int, column: Int): Unit {
-        val paintWhite = Paint().apply {
-            color = Color.parseColor("#DEB887")
+    fun show(canvas: Canvas, width: Int, context: Context, row: Int, column: Int) {
+        val paintBlack = Paint().apply {
+            color = Color.BLACK
             isAntiAlias = true
             strokeWidth = 10F
             style = Paint.Style.FILL
         }
+        val paintWhite = Paint().apply {
+            color = Color.parseColor("#DCDCDC")
+            isAntiAlias = true
+            strokeWidth = 10F
+            style = Paint.Style.FILL
+        }
+        canvas.drawCircle(0f + column * (width / 8) + width/16,0f + row * (width / 8) + width/16, (width.toFloat() / 64),paintBlack )
+        canvas.drawCircle(0f + column * (width / 8) + width/16,0f + row * (width / 8) + width/16, (width.toFloat() / 90),paintWhite )
 
-        val icon = BitmapFactory.decodeResource(
-                context.resources,
-                R.drawable.dot
-        )
-        canvas.drawBitmap(
-                Bitmap.createScaledBitmap(icon, width / 8, width / 8, true),
-                0f + column * (width / 8),
-                0f + row * (width / 8),
-                paintWhite
-        )
     }
 }

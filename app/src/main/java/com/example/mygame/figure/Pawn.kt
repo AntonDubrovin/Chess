@@ -51,6 +51,7 @@ class Pawn(_x: Int, _y: Int, _color: String) : Figure() {
     }
 
     override fun makeMove(newX: Int, newY: Int) {
-        TODO("Not yet implemented")
+        x = newX
+        y = newY
     }
 }
