@@ -24,7 +24,7 @@ class Knight(_x: Int, _y: Int, _color: String) : Figure() {
         if (y - 2 >= 0 && x + 1 <= 7 && Board.gameBoard[y - 2][x + 1] is Empty) {
             show(canvas, width, context, y - 2, x + 1)
         }
-        if (y - 1 <= 7 && x + 2 <= 7 && Board.gameBoard[y - 1][x + 2] is Empty) {
+        if (y - 1 >= 0 && x + 2 <= 7 && Board.gameBoard[y - 1][x + 2] is Empty) {
             show(canvas, width, context, y - 1, x + 2)
         }
         if (y + 1 <= 7 && x + 2 <= 7 && Board.gameBoard[y + 1][x + 2] is Empty) {
