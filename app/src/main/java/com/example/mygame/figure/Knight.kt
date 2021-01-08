@@ -47,8 +47,22 @@ class Knight(_x: Int, _y: Int, _color: String) : Figure() {
         }
     }
 
-    override fun makeMove(newX: Int, newY: Int) {
-        x = newX
-        y = newY
+    override fun makeMove(newX: Int, newY: Int): Boolean {
+        if (Board.gameBoard[newY][newX] is Empty || Board.gameBoard[newY][newX] !is Empty && Board.gameBoard[newY][newX].color != color) {
+            if (newY == y - 2 && newX == x + 1 ||
+                newY == y - 1 && newX == x + 2 ||
+                newY == y + 1 && newX == x + 2 ||
+                newY == y + 2 && newX == x + 1 ||
+                newY == y + 2 && newX == x - 1 ||
+                newY == y + 1 && newX == x - 2 ||
+                newY == y - 1 && newX == x - 2 ||
+                newY == y - 2 && newX == x - 1
+            ) {
+                x = newX
+                y = newY
+                return true
+            }
+        }
+        return false
     }
 }

@@ -63,7 +63,7 @@ class Board {
                             }
                         }
                         else -> {
-                            array += Empty(0, 0, "white")
+                            array += Empty(0, 0, "empty")
                         }
                     }
                 }

@@ -11,7 +11,7 @@ abstract class Figure : FigureInterface {
     abstract val picture: Int
 
     abstract fun showMove(canvas: Canvas, width: Int, context: Context): Unit
-    abstract fun makeMove(newX: Int, newY: Int): Unit
+    abstract fun makeMove(newX: Int, newY: Int): Boolean
     fun draw(canvas: Canvas, width: Int, context: Context): Unit {
         val paintWhite = Paint().apply {
             color = Color.parseColor("#DEB887")
@@ -21,14 +21,14 @@ abstract class Figure : FigureInterface {
         }
 
         val icon = BitmapFactory.decodeResource(
-                context.resources,
-                picture
+            context.resources,
+            picture
         )
         canvas.drawBitmap(
-                Bitmap.createScaledBitmap(icon, width / 8, width / 8, true),
-                0f + x * (width / 8),
-                0f + y * (width / 8),
-                paintWhite
+            Bitmap.createScaledBitmap(icon, width / 8, width / 8, true),
+            0f + x * (width / 8),
+            0f + y * (width / 8),
+            paintWhite
         )
     }
 
@@ -45,8 +45,17 @@ abstract class Figure : FigureInterface {
             strokeWidth = 10F
             style = Paint.Style.FILL
         }
-        canvas.drawCircle(0f + column * (width / 8) + width/16,0f + row * (width / 8) + width/16, (width.toFloat() / 64),paintBlack )
-        canvas.drawCircle(0f + column * (width / 8) + width/16,0f + row * (width / 8) + width/16, (width.toFloat() / 90),paintWhite )
-
+        canvas.drawCircle(
+            0f + column * (width / 8) + width / 16,
+            0f + row * (width / 8) + width / 16,
+            (width.toFloat() / 64),
+            paintBlack
+        )
+        canvas.drawCircle(
+            0f + column * (width / 8) + width / 16,
+            0f + row * (width / 8) + width / 16,
+            (width.toFloat() / 90),
+            paintWhite
+        )
     }
 }

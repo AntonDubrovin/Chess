@@ -50,8 +50,28 @@ class Pawn(_x: Int, _y: Int, _color: String) : Figure() {
         }
     }
 
-    override fun makeMove(newX: Int, newY: Int) {
-        x = newX
-        y = newY
+    override fun makeMove(newX: Int, newY: Int): Boolean { //TODO взятие на проходе
+        if (Board.gameBoard[newY][newX] is Empty) {
+            if (color == "white" && newX == x && (y == 6 && (newY == y - 1 || newY == y - 2) || y != 6 && newY == y - 1)) {
+                x = newX
+                y = newY
+                return true
+            } else if (color == "black" && newX == x && (y == 1 && (newY == y + 1 || newY == y + 2) || y != 1 && newY == y + 1)) {
+                x = newX
+                y = newY
+                return true
+            }
+        } else if (Board.gameBoard[newY][newX] !is Empty && Board.gameBoard[newY][newX].color != color) {
+            if (color == "white" && newY == y - 1 && (newX == x - 1 || newX == x + 1)) {
+                x = newX
+                y = newY
+                return true
+            } else if (color == "black" && newY == y + 1 && (newX == x - 1 || newX == x + 1)) {
+                x = newX
+                y = newY
+                return true
+            }
+        }
+        return false
     }
 }

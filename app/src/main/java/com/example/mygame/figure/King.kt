@@ -32,8 +32,20 @@ class King(_x: Int, _y: Int, _color: String) : Figure() {
         }
     }
 
-    override fun makeMove(newX: Int, newY: Int) {
-        x = newX
-        y = newY
+    override fun makeMove(newX: Int, newY: Int): Boolean {
+        if (Board.gameBoard[newY][newX] is Empty || Board.gameBoard[newY][newX] !is Empty && Board.gameBoard[newY][newX].color != color) {
+            for (dx in -1..1) {
+                for (dy in -1..1) {
+                    if (dx != 0 || dy != 0) {
+                        if (x + dx == newX && y + dy == newY) {
+                            x = newX
+                            y = newY
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+        return false
     }
 }

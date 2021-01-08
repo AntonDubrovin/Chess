@@ -43,9 +43,73 @@ class Rook(_x: Int, _y: Int, _color: String) : Figure() {
         }
     }
 
-    //show(canvas, width, context, y + 1, x)
-    override fun makeMove(newX: Int, newY: Int) {
-        x = newX
-        y = newY
+    override fun makeMove(newX: Int, newY: Int): Boolean {
+        if (Board.gameBoard[newY][newX] is Empty || Board.gameBoard[newY][newX] !is Empty && Board.gameBoard[newY][newX].color != color) {
+            var dx = 1
+            while (x + dx <= 7 && Board.gameBoard[y][x + dx] is Empty) {
+                if (x + dx == newX && newY == y) {
+                    x = newX
+                    y = newY
+                    return true
+                }
+                dx++
+            }
+            if (x + dx <= 7 && Board.gameBoard[y][x + dx].color != color) {
+                if (x + dx == newX && newY == y) {
+                    x = newX
+                    y = newY
+                    return true
+                }
+            }
+            dx = -1
+            while (x + dx >= 0 && Board.gameBoard[y][x + dx] is Empty) {
+                if (x + dx == newX && newY == y) {
+                    x = newX
+                    y = newY
+                    return true
+                }
+                dx--
+            }
+            if (x + dx >= 0 && Board.gameBoard[y][x + dx].color != color) {
+                if (x + dx == newX && newY == y) {
+                    x = newX
+                    y = newY
+                    return true
+                }
+            }
+            var dy = 1
+            while (y + dy <= 7 && Board.gameBoard[y + dy][x] is Empty) {
+                if (y + dy == newY && newX == x) {
+                    x = newX
+                    y = newY
+                    return true
+                }
+                dy++
+            }
+            if (y + dy <= 7 && Board.gameBoard[y + dy][x].color != color) {
+                if (y + dy == newY && newX == x) {
+                    x = newX
+                    y = newY
+                    return true
+                }
+            }
+            dy = -1
+            while (y + dy >= 0 && Board.gameBoard[y + dy][x] is Empty) {
+                if (y + dy == newY && newX == x) {
+                    x = newX
+                    y = newY
+                    return true
+                }
+                dy--
+            }
+            if (y + dy >= 0 && Board.gameBoard[y + dy][x].color != color) {
+                if (y + dy == newY && newX == x) {
+                    x = newX
+                    y = newY
+                    return true
+                }
+            }
+        }
+        return false
     }
 }

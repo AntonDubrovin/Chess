@@ -3,7 +3,9 @@ package com.example.mygame
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -21,7 +23,7 @@ class BoardView @JvmOverloads constructor(
     defStyleRes: Int = 0,
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
-    private var currentFigure: Figure = Empty(0, 0, "white")
+    private var currentFigure: Figure = Empty(0, 0, "empty")
     var flag = false
     var touchX: Int = -1
     var touchY: Int = -1
@@ -64,15 +66,22 @@ class BoardView @JvmOverloads constructor(
                                 invalidate()
                             }
                         } else if (flag && (event.y.toInt() / (width / 8)) <= 7) {
-                            Board.gameBoard[touchY][touchX] = Empty(touchX, touchY, "white")
                             val xcord = event.x.toInt() / (width / 8)
                             val ycord = event.y.toInt() / (width / 8)
-                            Board.gameBoard[ycord][xcord] = currentFigure
-                            currentFigure.makeMove(xcord, ycord)
+                            if (Board.gameBoard[ycord][xcord].color != currentFigure.color) {
+                                if (currentFigure.makeMove(xcord, ycord)) {
+                                    Board.gameBoard[touchY][touchX] = Empty(touchX, touchY, "empty")
+                                    Board.gameBoard[ycord][xcord] = currentFigure
+                                    touchX = -1
+                                    touchY = -1
+                                    invalidate()
+                                    flag = false
+                                }
+                            }
                             touchX = -1
                             touchY = -1
-                            invalidate()
                             flag = false
+
                         }
                     }
                 }
