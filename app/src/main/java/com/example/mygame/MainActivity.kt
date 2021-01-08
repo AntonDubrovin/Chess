@@ -11,14 +11,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-
-
-
     companion object {
         lateinit var instance: MainActivity
             private set
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {

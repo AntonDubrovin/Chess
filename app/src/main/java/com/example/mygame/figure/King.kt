@@ -26,13 +26,15 @@ class King(_x: Int, _y: Int, _color: String) : Figure() {
                 if (dx != 0 || dy != 0) {
                     if (x + dx in 0..7 && y + dy in 0..7 && Board.gameBoard[y + dy][x + dx] is Empty) {
                         show(canvas, width, context, y + dy, x + dx)
+                    } else if (x + dx in 0..7 && y + dy in 0..7 && Board.gameBoard[y + dy][x + dx].color != color) {
+                        showAttack(canvas, width, context, y + dy, x + dx)
                     }
                 }
             }
         }
     }
 
-    override fun makeMove(newX: Int, newY: Int): Boolean {
+    override fun makeMove(newX: Int, newY: Int): Boolean { //TODO ДОХУЯ ВСЕГО ПОМОГИТЕ
         if (Board.gameBoard[newY][newX] is Empty || Board.gameBoard[newY][newX] !is Empty && Board.gameBoard[newY][newX].color != color) {
             for (dx in -1..1) {
                 for (dy in -1..1) {

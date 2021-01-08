@@ -58,4 +58,20 @@ abstract class Figure : FigureInterface {
             paintWhite
         )
     }
+
+    fun showAttack(canvas: Canvas, width: Int, context: Context, row: Int, column: Int) {
+        val paintAttack = Paint().apply {
+            color = Color.parseColor("#80008080")
+            isAntiAlias = true
+            strokeWidth = 10F
+            style = Paint.Style.STROKE
+        }
+        canvas.drawRect(
+            0f + column * (width / 8) + 1,
+            0f + row * (width / 8) + 1,
+            0f + column * (width / 8) + width / 8 - 1,
+            0f + row * (width / 8) + width / 8 - 1,
+            paintAttack
+        )
+    }
 }

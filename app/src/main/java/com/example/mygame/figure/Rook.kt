@@ -26,20 +26,32 @@ class Rook(_x: Int, _y: Int, _color: String) : Figure() {
             show(canvas, width, context, y, x + dx)
             dx++
         }
+        if (x + dx <= 7 && Board.gameBoard[y][x + dx].color != color) {
+            showAttack(canvas, width, context, y, x + dx)
+        }
         dx = -1
         while (x + dx >= 0 && Board.gameBoard[y][x + dx] is Empty) {
             show(canvas, width, context, y, x + dx)
             dx--
+        }
+        if (x + dx >= 0 && Board.gameBoard[y][x + dx].color != color) {
+            showAttack(canvas, width, context, y, x + dx)
         }
         var dy = 1
         while (y + dy <= 7 && Board.gameBoard[y + dy][x] is Empty) {
             show(canvas, width, context, y + dy, x)
             dy++
         }
+        if (y + dy <= 7 && Board.gameBoard[y + dy][x].color != color) {
+            showAttack(canvas, width, context, y + dy, x)
+        }
         dy = -1
         while (y + dy >= 0 && Board.gameBoard[y + dy][x] is Empty) {
             show(canvas, width, context, y + dy, x)
             dy--
+        }
+        if (y + dy >= 0 && Board.gameBoard[y + dy][x].color != color) {
+            showAttack(canvas, width, context, y + dy, x)
         }
     }
 

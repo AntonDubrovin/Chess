@@ -55,23 +55,23 @@ class BoardView @JvmOverloads constructor(
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
                         if (!flag && (event.y.toInt() / (width / 8)) <= 7) {
-                            val xcord = event.x.toInt() / (width / 8)
-                            val ycord = event.y.toInt() / (width / 8)
+                            val newX = event.x.toInt() / (width / 8)
+                            val newY = event.y.toInt() / (width / 8)
 
-                            if (Board.gameBoard[ycord][xcord] !is Empty) {
-                                touchX = xcord
-                                touchY = ycord
-                                currentFigure = Board.gameBoard[ycord][xcord]
+                            if (Board.gameBoard[newY][newX] !is Empty) {
+                                touchX = newX
+                                touchY = newY
+                                currentFigure = Board.gameBoard[newY][newX]
                                 flag = true
                                 invalidate()
                             }
                         } else if (flag && (event.y.toInt() / (width / 8)) <= 7) {
-                            val xcord = event.x.toInt() / (width / 8)
-                            val ycord = event.y.toInt() / (width / 8)
-                            if (Board.gameBoard[ycord][xcord].color != currentFigure.color) {
-                                if (currentFigure.makeMove(xcord, ycord)) {
+                            val newX = event.x.toInt() / (width / 8)
+                            val newY = event.y.toInt() / (width / 8)
+                            if (Board.gameBoard[newY][newX].color != currentFigure.color) {
+                                if (currentFigure.makeMove(newX, newY)) {
                                     Board.gameBoard[touchY][touchX] = Empty(touchX, touchY, "empty")
-                                    Board.gameBoard[ycord][xcord] = currentFigure
+                                    Board.gameBoard[newY][newX] = currentFigure
                                     touchX = -1
                                     touchY = -1
                                     invalidate()
