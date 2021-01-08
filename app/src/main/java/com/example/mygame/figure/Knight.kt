@@ -3,24 +3,25 @@ package com.example.mygame.figure
 import android.content.Context
 import android.graphics.Canvas
 import com.example.mygame.Board
-import com.example.mygame.figure.common.Figure
+import com.example.mygame.FigureColor
 import com.example.mygame.R
+import com.example.mygame.figure.common.AbstractFigure
 
-class Knight(_x: Int, _y: Int, _color: String) : Figure() {
+class Knight(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
     override var x: Int = _x
     override var y: Int = _y
-    override val color: String = _color
+    override val color: FigureColor = _color
     override val picture: Int
 
     init {
-        picture = if (color == "white") {
+        picture = if (color == FigureColor.WHITE) {
             R.drawable.wknight
         } else {
             R.drawable.bknight
         }
     }
 
-    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: String) {
+    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: FigureColor) {
         if (turn == color) {
             if (y - 2 >= 0 && x + 1 <= 7 && Board.gameBoard[y - 2][x + 1] is Empty) {
                 show(canvas, width, context, y - 2, x + 1)
@@ -65,7 +66,7 @@ class Knight(_x: Int, _y: Int, _color: String) : Figure() {
         }
     }
 
-    override fun makeMove(newX: Int, newY: Int, turn: String): Boolean {
+    override fun makeMove(newX: Int, newY: Int, turn: FigureColor): Boolean {
         if (turn == color) {
             if (Board.gameBoard[newY][newX] is Empty || Board.gameBoard[newY][newX] !is Empty && Board.gameBoard[newY][newX].color != color) {
                 if (newY == y - 2 && newX == x + 1 ||

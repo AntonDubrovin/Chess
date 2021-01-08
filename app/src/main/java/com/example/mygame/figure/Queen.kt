@@ -3,24 +3,25 @@ package com.example.mygame.figure
 import android.content.Context
 import android.graphics.Canvas
 import com.example.mygame.Board
-import com.example.mygame.figure.common.Figure
+import com.example.mygame.FigureColor
 import com.example.mygame.R
+import com.example.mygame.figure.common.AbstractFigure
 
-class Queen(_x: Int, _y: Int, _color: String) : Figure() {
+class Queen(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
     override var x: Int = _x
     override var y: Int = _y
-    override val color: String = _color
+    override val color: FigureColor = _color
     override val picture: Int
 
     init {
-        picture = if (color == "white") {
+        picture = if (color == FigureColor.WHITE) {
             R.drawable.wqueen
         } else {
             R.drawable.bqueen
         }
     }
 
-    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: String) {
+    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: FigureColor) {
         if (turn == color) {
             var dx = 1
             var dy = 1
@@ -98,7 +99,7 @@ class Queen(_x: Int, _y: Int, _color: String) : Figure() {
         }
     }
 
-    override fun makeMove(newX: Int, newY: Int, turn: String): Boolean {
+    override fun makeMove(newX: Int, newY: Int, turn: FigureColor): Boolean {
         if (turn == color) {
             if (Board.gameBoard[newY][newX] is Empty || Board.gameBoard[newY][newX] !is Empty && Board.gameBoard[newY][newX].color != color) {
                 var dx = 1

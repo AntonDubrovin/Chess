@@ -1,69 +1,63 @@
 package com.example.mygame
 
 import com.example.mygame.figure.*
-import com.example.mygame.figure.common.Figure
+import com.example.mygame.figure.common.AbstractFigure
 
 class Board {
     companion object {
-        var gameBoard = arrayOf<Array<Figure>>()
-
-        fun swap(x1: Int, y1: Int, x2: Int, y2: Int) {
-            var tmp = gameBoard[x1][y1]
-            gameBoard[x2][y2] = tmp
-            gameBoard[x1][y1] = gameBoard[x2][y2]
-        }
+        var gameBoard = arrayOf<Array<AbstractFigure>>()
 
         fun initialize() {
             for (i in 0..7) {
-                var array = arrayOf<Figure>()
+                var array = arrayOf<AbstractFigure>()
                 for (j in 0..7) {
                     when (i) {
                         6 -> {
-                            array += Pawn(j, i, "white") //white pawn
+                            array += Pawn(j, i, FigureColor.WHITE) //white pawn
                         }
                         1 -> {
-                            array += Pawn(j, i, "black") //black pawn
+                            array += Pawn(j, i, FigureColor.BLACK) //black pawn
                         }
                         7 -> {
                             when (j) {
                                 0, 7 -> {
-                                    array += Rook(j, i, "white")// white rook
+                                    array += Rook(j, i, FigureColor.WHITE)// white rook
                                 }
                                 1, 6 -> {
-                                    array += Knight(j, i, "white") // white knight
+                                    array += Knight(j, i, FigureColor.WHITE) // white knight
                                 }
                                 2, 5 -> {
-                                    array += Bishop(j, i, "white") // white bishop
+                                    array += Bishop(j, i, FigureColor.WHITE) // white bishop
                                 }
                                 3 -> {
-                                    array += Queen(j, i, "white") // white queen
+                                    array += Queen(j, i, FigureColor.WHITE) // white queen
                                 }
                                 4 -> {
-                                    array += King(j, i, "white") // white king
+                                    array += King(j, i, FigureColor.WHITE) // white king
                                 }
                             }
                         }
                         0 -> {
                             when (j) {
                                 0, 7 -> {
-                                    array += Rook(j, i, "black") // black rook
+                                    array += Rook(j, i, FigureColor.BLACK) // black rook
                                 }
                                 1, 6 -> {
-                                    array += Knight(j, i, "black") // black knight
+                                    array += Knight(j, i, FigureColor.BLACK) // black knight
                                 }
                                 2, 5 -> {
-                                    array += Bishop(j, i, "black") // black bishop
+                                    array += Bishop(j, i, FigureColor.BLACK) // black bishop
                                 }
                                 3 -> {
-                                    array += Queen(j, i, "black") // black queen
+                                    array += Queen(j, i, FigureColor.BLACK) // black queen
                                 }
                                 4 -> {
-                                    array += King(j, i, "black") // black king
+                                    array += King(j, i, FigureColor.BLACK) // black king
                                 }
                             }
                         }
                         else -> {
-                            array += Empty(0, 0, "empty")
+                            array += Empty(0, 0, FigureColor.EMPTY)
                         }
                     }
                 }

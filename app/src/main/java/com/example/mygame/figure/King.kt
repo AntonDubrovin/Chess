@@ -3,24 +3,25 @@ package com.example.mygame.figure
 import android.content.Context
 import android.graphics.Canvas
 import com.example.mygame.Board
-import com.example.mygame.figure.common.Figure
+import com.example.mygame.FigureColor
 import com.example.mygame.R
+import com.example.mygame.figure.common.AbstractFigure
 
-class King(_x: Int, _y: Int, _color: String) : Figure() {
+class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
     override var x: Int = _x
     override var y: Int = _y
-    override val color: String = _color
+    override val color: FigureColor = _color
     override val picture: Int
 
     init {
-        picture = if (color == "white") {
+        picture = if (color == FigureColor.WHITE) {
             R.drawable.wking
         } else {
             R.drawable.bking
         }
     }
 
-    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: String) {
+    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: FigureColor) {
         if (turn == color) {
             for (dx in -1..1) {
                 for (dy in -1..1) {
@@ -36,7 +37,7 @@ class King(_x: Int, _y: Int, _color: String) : Figure() {
         }
     }
 
-    override fun makeMove(newX: Int, newY: Int, turn: String): Boolean { //TODO ДОХУЯ ВСЕГО ПОМОГИТЕ
+    override fun makeMove(newX: Int, newY: Int, turn: FigureColor): Boolean { //TODO ДОХУЯ ВСЕГО ПОМОГИТЕ
         if (turn == color) {
             if (Board.gameBoard[newY][newX] is Empty || Board.gameBoard[newY][newX] !is Empty && Board.gameBoard[newY][newX].color != color) {
                 for (dx in -1..1) {

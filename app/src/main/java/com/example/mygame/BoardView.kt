@@ -9,11 +9,9 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
 import com.example.mygame.figure.Empty
-import com.example.mygame.figure.common.Figure
+import com.example.mygame.figure.common.AbstractFigure
 import kotlinx.android.synthetic.main.activity_main.view.*
-
 
 @SuppressLint("ClickableViewAccessibility")
 class BoardView @JvmOverloads constructor(
@@ -23,12 +21,13 @@ class BoardView @JvmOverloads constructor(
     defStyleRes: Int = 0,
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
-    var currentFigure: Figure = Empty(0, 0, "empty")
+    var currentFigure: AbstractFigure = Empty(0, 0, FigureColor.EMPTY)
     var flag = false
     var touchX: Int = -1
     var touchY: Int = -1
     var count = 0
-    var turn: String = "white"
+    var turn: FigureColor = FigureColor.WHITE
+    private var moveMaker: MoveMaker
 
 
     private val paintWhite = Paint().apply {
@@ -50,44 +49,42 @@ class BoardView @JvmOverloads constructor(
         val a: TypedArray = context.obtainStyledAttributes(
             attrs, R.styleable.BoardView, defStyleAttr, defStyleRes
         )
+        moveMaker = MoveMaker(MainActivity.instance.whitePlayer, MainActivity.instance.blackPlayer)
         try {
             Board.initialize()
             board.setOnTouchListener { _, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        if (!flag && (event.y.toInt() / (width / 8)) <= 7) {
-                            val newX = event.x.toInt() / (width / 8)
-                            val newY = event.y.toInt() / (width / 8)
-
-                            if (Board.gameBoard[newY][newX] !is Empty) {
+                        val newX = transpose(event.x)
+                        val newY = transpose(event.y)
+                        if (!flag && newY <= 7) {
+                            if (moveMaker.checkChoose(newX, newY, turn)) {
                                 touchX = newX
                                 touchY = newY
                                 currentFigure = Board.gameBoard[newY][newX]
                                 flag = true
                                 invalidate()
                             }
-                        } else if (flag && (event.y.toInt() / (width / 8)) <= 7) {
-                            val newX = event.x.toInt() / (width / 8)
-                            val newY = event.y.toInt() / (width / 8)
-                            if (Board.gameBoard[newY][newX].color != currentFigure.color) {
+                        } else if (flag && newY <= 7) {
+                            if (moveMaker.checkMove(newX, newY, currentFigure)) {
                                 if (currentFigure.makeMove(newX, newY, turn)) {
-                                    turn = if (turn == "white") {
-                                        "black"
-                                    } else {
-                                        "white"
-                                    }
-                                    Board.gameBoard[touchY][touchX] = Empty(touchX, touchY, "empty")
+                                    turn = changeTurn(turn)
+                                    Board.gameBoard[touchY][touchX] =
+                                        Empty(touchX, touchY, FigureColor.EMPTY)
                                     Board.gameBoard[newY][newX] = currentFigure
                                     touchX = -1
                                     touchY = -1
                                     invalidate()
                                     flag = false
                                 }
-                            }
-                            touchX = -1
-                            touchY = -1
-                            flag = false
+                            } else {
+                                touchX = newX
+                                touchY = newY
+                                currentFigure = Board.gameBoard[newY][newX]
+                                flag = true
+                                invalidate()
 
+                            }
                         }
                     }
                 }
@@ -96,6 +93,18 @@ class BoardView @JvmOverloads constructor(
 
         } finally {
             a.recycle()
+        }
+    }
+
+    private fun transpose(x: Float): Int {
+        return x.toInt() / (width / 8)
+    }
+
+    private fun changeTurn(turn: FigureColor): FigureColor {
+        return if (turn == FigureColor.WHITE) {
+            FigureColor.BLACK
+        } else {
+            FigureColor.WHITE
         }
     }
 
@@ -109,12 +118,11 @@ class BoardView @JvmOverloads constructor(
         )
     }
 
-    private fun drawFigure(canvas: Canvas, figure: Figure) {
+    private fun drawFigure(canvas: Canvas, figure: AbstractFigure) {
         if (figure !is Empty) {
             figure.draw(canvas, width, context)
         }
     }
-
 
     private fun drawFigures(canvas: Canvas) {
         for (i in 0..7) {
@@ -127,7 +135,6 @@ class BoardView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         count++
-        Toast.makeText(context, "$count", Toast.LENGTH_SHORT).show()
         for (i in 1..8) {
             for (j in 1..8) {
                 if ((i + j) % 2 == 0) {

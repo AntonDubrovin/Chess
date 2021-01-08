@@ -2,14 +2,14 @@ package com.example.mygame
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
-
+import com.example.mygame.player.UserPlayer
+import com.example.mygame.player.common.AbstractPlayer
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var whitePlayer: AbstractPlayer
+    lateinit var blackPlayer: AbstractPlayer
 
     companion object {
         lateinit var instance: MainActivity
@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         instance = this
+        whitePlayer = UserPlayer(color = FigureColor.WHITE)
+        blackPlayer = UserPlayer(color = FigureColor.BLACK)
         setContentView(R.layout.activity_main)
     }
 
