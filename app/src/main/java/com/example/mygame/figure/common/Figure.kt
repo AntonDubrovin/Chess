@@ -10,8 +10,8 @@ abstract class Figure : FigureInterface {
     abstract val color: String
     abstract val picture: Int
 
-    abstract fun showMove(canvas: Canvas, width: Int, context: Context): Unit
-    abstract fun makeMove(newX: Int, newY: Int): Boolean
+    abstract fun showMove(canvas: Canvas, width: Int, context: Context, turn: String): Unit
+    abstract fun makeMove(newX: Int, newY: Int, turn: String): Boolean
     fun draw(canvas: Canvas, width: Int, context: Context): Unit {
         val paintWhite = Paint().apply {
             color = Color.parseColor("#DEB887")

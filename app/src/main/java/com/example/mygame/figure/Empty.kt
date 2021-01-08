@@ -11,10 +11,10 @@ class Empty(_x: Int, _y: Int, _color: String) : Figure() {
     override val color: String = _color
     override val picture: Int = -1
 
-    override fun showMove(canvas: Canvas, width: Int, context: Context) {
+    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: String) {
     }
 
-    override fun makeMove(newX: Int, newY: Int): Boolean {
+    override fun makeMove(newX: Int, newY: Int, turn: String): Boolean {
         x = newX
         y = newY
         return true

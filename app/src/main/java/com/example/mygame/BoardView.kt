@@ -23,11 +23,12 @@ class BoardView @JvmOverloads constructor(
     defStyleRes: Int = 0,
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
-    private var currentFigure: Figure = Empty(0, 0, "empty")
+    var currentFigure: Figure = Empty(0, 0, "empty")
     var flag = false
     var touchX: Int = -1
     var touchY: Int = -1
     var count = 0
+    var turn: String = "white"
 
 
     private val paintWhite = Paint().apply {
@@ -69,7 +70,12 @@ class BoardView @JvmOverloads constructor(
                             val newX = event.x.toInt() / (width / 8)
                             val newY = event.y.toInt() / (width / 8)
                             if (Board.gameBoard[newY][newX].color != currentFigure.color) {
-                                if (currentFigure.makeMove(newX, newY)) {
+                                if (currentFigure.makeMove(newX, newY, turn)) {
+                                    turn = if (turn == "white") {
+                                        "black"
+                                    } else {
+                                        "white"
+                                    }
                                     Board.gameBoard[touchY][touchX] = Empty(touchX, touchY, "empty")
                                     Board.gameBoard[newY][newX] = currentFigure
                                     touchX = -1
@@ -133,7 +139,7 @@ class BoardView @JvmOverloads constructor(
         }
         drawFigures(canvas)
         if (touchX != -1 && touchY != -1) {
-            Board.gameBoard[touchY][touchX].showMove(canvas, width, context)
+            Board.gameBoard[touchY][touchX].showMove(canvas, width, context, turn)
         }
     }
 }
