@@ -26,36 +26,16 @@ class BoardView @JvmOverloads constructor(
     defStyleRes: Int = 0,
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
-    var currentFigure: AbstractFigure = Empty(0, 0, FigureColor.EMPTY)
-    var flag = false
-    var touchX: Int = -1
-    var touchY: Int = -1
-    var count = 0
-    var turn: FigureColor = FigureColor.WHITE
-    private var moveMaker: MoveMaker
-
-
     companion object {
         lateinit var instance: BoardView
             private set
     }
-
-    private val paintWhite = Paint().apply {
-        color = Color.parseColor("#DEB887")
-        isAntiAlias = true
-        strokeWidth = 10F
-        style = Paint.Style.FILL
-    }
-
-    private val paintBlack = Paint().apply {
-        color = Color.parseColor("#8B4513")
-        isAntiAlias = true
-        strokeWidth = 10F
-        style = Paint.Style.FILL
-    }
+    
+    var count = 0
+    var turn: FigureColor = FigureColor.WHITE
+    private var moveMaker: MoveMaker
 
     init {
-
         val a: TypedArray = context.obtainStyledAttributes(
             attrs, R.styleable.BoardView, defStyleAttr, defStyleRes
         )
@@ -74,6 +54,20 @@ class BoardView @JvmOverloads constructor(
         } finally {
             a.recycle()
         }
+    }
+
+    private val paintWhite = Paint().apply {
+        color = Color.parseColor("#DEB887")
+        isAntiAlias = true
+        strokeWidth = 10F
+        style = Paint.Style.FILL
+    }
+
+    private val paintBlack = Paint().apply {
+        color = Color.parseColor("#8B4513")
+        isAntiAlias = true
+        strokeWidth = 10F
+        style = Paint.Style.FILL
     }
 
     private fun transpose(x: Float): Int {
@@ -110,7 +104,6 @@ class BoardView @JvmOverloads constructor(
             Board.gameBoard[7][3] is Empty && Board.gameBoard[7][2] is Empty && Board.gameBoard[7][1] is Empty &&
                     Board.gameBoard[7][0].color == FigureColor.WHITE && Board.gameBoard[7][0] is Rook && Board.gameBoard[7][0].const
         )
-
         count++
         for (i in 1..8) {
             for (j in 1..8) {

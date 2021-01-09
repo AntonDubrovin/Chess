@@ -14,14 +14,10 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
 
     val white: AbstractPlayer = _white
     val black: AbstractPlayer = _black
-
     var touchX: Int = -1
     var touchY: Int = -1
-
     var currentFigure: AbstractFigure = Empty(-1, -1, FigureColor.EMPTY)
-
     var turn = FigureColor.WHITE
-
     var flag = false
 
 
