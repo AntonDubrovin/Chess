@@ -2,7 +2,6 @@ package com.example.mygame.figure.common
 
 import android.content.Context
 import android.graphics.*
-import com.example.mygame.FigureColor
 
 abstract class AbstractFigure : FigureInterface {
     abstract val const: Boolean

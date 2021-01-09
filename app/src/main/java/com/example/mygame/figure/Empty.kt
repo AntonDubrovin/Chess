@@ -2,7 +2,7 @@ package com.example.mygame.figure
 
 import android.content.Context
 import android.graphics.Canvas
-import com.example.mygame.FigureColor
+import com.example.mygame.figure.common.FigureColor
 import com.example.mygame.figure.common.AbstractFigure
 
 class Empty(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {

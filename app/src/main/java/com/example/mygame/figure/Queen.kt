@@ -2,9 +2,9 @@ package com.example.mygame.figure
 
 import android.content.Context
 import android.graphics.Canvas
-import com.example.mygame.Board
-import com.example.mygame.FigureColor
-import com.example.mygame.MoveMaker
+import com.example.mygame.board.Board
+import com.example.mygame.figure.common.FigureColor
+import com.example.mygame.figure.common.MoveMaker
 import com.example.mygame.R
 import com.example.mygame.figure.common.AbstractFigure
 

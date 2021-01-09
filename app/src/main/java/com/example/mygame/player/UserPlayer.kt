@@ -1,9 +1,8 @@
 package com.example.mygame.player
 
-import com.example.mygame.Board
-import com.example.mygame.FigureColor
+import com.example.mygame.board.Board
+import com.example.mygame.figure.common.FigureColor
 import com.example.mygame.figure.Empty
-import com.example.mygame.figure.King
 import com.example.mygame.figure.common.AbstractFigure
 import com.example.mygame.player.common.AbstractPlayer
 

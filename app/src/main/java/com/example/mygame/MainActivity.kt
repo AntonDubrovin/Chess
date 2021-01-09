@@ -3,6 +3,7 @@ package com.example.mygame
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mygame.figure.common.FigureColor
 import com.example.mygame.player.UserPlayer
 import com.example.mygame.player.common.AbstractPlayer
 
