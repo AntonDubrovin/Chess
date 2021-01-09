@@ -4,10 +4,12 @@ import android.content.Context
 import android.graphics.Canvas
 import com.example.mygame.Board
 import com.example.mygame.FigureColor
+import com.example.mygame.MoveMaker
 import com.example.mygame.R
 import com.example.mygame.figure.common.AbstractFigure
 
 class Pawn(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
+    override val const: Boolean = true
     override var x: Int = _x
     override var y: Int = _y
     override val color: FigureColor = _color
@@ -18,6 +20,21 @@ class Pawn(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
             R.drawable.wpawn
         } else {
             R.drawable.bpawn
+        }
+    }
+
+    override fun moveCell(color: FigureColor) {
+        if (color == FigureColor.WHITE && x - 1 >= 0 && Board.gameBoard[y - 1][x - 1].color != color) {
+            MoveMaker.st.add(Pair(x - 1, y - 1))
+        }
+        if (color == FigureColor.WHITE && x + 1 <= 7 && Board.gameBoard[y - 1][x + 1].color != color) {
+            MoveMaker.st.add(Pair(x + 1, y - 1))
+        }
+        if (color == FigureColor.BLACK && x - 1 >= 0 && Board.gameBoard[y + 1][x - 1].color != color) {
+            MoveMaker.st.add(Pair(x - 1, y + 1))
+        }
+        if (color == FigureColor.BLACK && x + 1 <= 7 && Board.gameBoard[y + 1][x + 1].color != color) {
+            MoveMaker.st.add(Pair(x + 1, y + 1))
         }
     }
 

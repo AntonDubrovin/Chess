@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.example.mygame.figure.Empty
+import com.example.mygame.figure.Rook
 import com.example.mygame.figure.common.AbstractFigure
 import kotlinx.android.synthetic.main.activity_main.view.*
 
@@ -29,6 +30,11 @@ class BoardView @JvmOverloads constructor(
     var turn: FigureColor = FigureColor.WHITE
     private var moveMaker: MoveMaker
 
+
+    companion object {
+        lateinit var instance: BoardView
+            private set
+    }
 
     private val paintWhite = Paint().apply {
         color = Color.parseColor("#DEB887")
@@ -50,47 +56,17 @@ class BoardView @JvmOverloads constructor(
             attrs, R.styleable.BoardView, defStyleAttr, defStyleRes
         )
         moveMaker = MoveMaker(MainActivity.instance.whitePlayer, MainActivity.instance.blackPlayer)
+        instance = this
         try {
             Board.initialize()
             board.setOnTouchListener { _, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        val newX = transpose(event.x)
-                        val newY = transpose(event.y)
-                        if (!flag && newY <= 7) {
-                            if (moveMaker.checkChoose(newX, newY, turn)) {
-                                touchX = newX
-                                touchY = newY
-                                currentFigure = Board.gameBoard[newY][newX]
-                                flag = true
-                                invalidate()
-                            }
-                        } else if (flag && newY <= 7) {
-                            if (moveMaker.checkMove(newX, newY, currentFigure)) {
-                                if (currentFigure.makeMove(newX, newY, turn)) {
-                                    turn = changeTurn(turn)
-                                    Board.gameBoard[touchY][touchX] =
-                                        Empty(touchX, touchY, FigureColor.EMPTY)
-                                    Board.gameBoard[newY][newX] = currentFigure
-                                    touchX = -1
-                                    touchY = -1
-                                    invalidate()
-                                    flag = false
-                                }
-                            } else {
-                                touchX = newX
-                                touchY = newY
-                                currentFigure = Board.gameBoard[newY][newX]
-                                flag = true
-                                invalidate()
-
-                            }
-                        }
+                        moveMaker.makeTurn(transpose(event.x), transpose(event.y))
                     }
                 }
                 true
             }
-
         } finally {
             a.recycle()
         }
@@ -98,14 +74,6 @@ class BoardView @JvmOverloads constructor(
 
     private fun transpose(x: Float): Int {
         return x.toInt() / (width / 8)
-    }
-
-    private fun changeTurn(turn: FigureColor): FigureColor {
-        return if (turn == FigureColor.WHITE) {
-            FigureColor.BLACK
-        } else {
-            FigureColor.WHITE
-        }
     }
 
     private fun drawCell(row: Int, column: Int, canvas: Canvas, paint: Paint) {
@@ -134,6 +102,11 @@ class BoardView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        println(
+            Board.gameBoard[7][3] is Empty && Board.gameBoard[7][2] is Empty && Board.gameBoard[7][1] is Empty &&
+                    Board.gameBoard[7][0].color == FigureColor.WHITE && Board.gameBoard[7][0] is Rook && Board.gameBoard[7][0].const
+        )
+
         count++
         for (i in 1..8) {
             for (j in 1..8) {
@@ -145,8 +118,13 @@ class BoardView @JvmOverloads constructor(
             }
         }
         drawFigures(canvas)
-        if (touchX != -1 && touchY != -1) {
-            Board.gameBoard[touchY][touchX].showMove(canvas, width, context, turn)
+        if (moveMaker.touchX != -1 && moveMaker.touchY != -1) {
+            Board.gameBoard[moveMaker.touchY][moveMaker.touchX].showMove(
+                canvas,
+                width,
+                context,
+                moveMaker.turn
+            )
         }
     }
 }

@@ -5,10 +5,13 @@ import android.graphics.*
 import com.example.mygame.FigureColor
 
 abstract class AbstractFigure : FigureInterface {
+    abstract val const: Boolean
     abstract var x: Int
     abstract var y: Int
     abstract val color: FigureColor
     abstract val picture: Int
+
+    abstract fun moveCell(color: FigureColor)
 
     abstract fun showMove(canvas: Canvas, width: Int, context: Context, turn: FigureColor)
     abstract fun makeMove(newX: Int, newY: Int, turn: FigureColor): Boolean

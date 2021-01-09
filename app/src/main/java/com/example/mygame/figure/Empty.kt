@@ -6,10 +6,15 @@ import com.example.mygame.FigureColor
 import com.example.mygame.figure.common.AbstractFigure
 
 class Empty(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
+    override val const: Boolean = true
     override var x: Int = _x
     override var y: Int = _y
     override val color: FigureColor = _color
     override val picture: Int = -1
+
+    override fun moveCell(color: FigureColor) {
+
+    }
 
     override fun showMove(canvas: Canvas, width: Int, context: Context, turn: FigureColor) {
     }

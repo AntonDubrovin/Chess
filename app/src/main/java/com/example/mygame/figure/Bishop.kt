@@ -4,10 +4,12 @@ import android.content.Context
 import android.graphics.Canvas
 import com.example.mygame.Board
 import com.example.mygame.FigureColor
+import com.example.mygame.MoveMaker
 import com.example.mygame.R
 import com.example.mygame.figure.common.AbstractFigure
 
 class Bishop(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
+    override val const: Boolean = true
     override var x: Int = _x
     override var y: Int = _y
     override val color: FigureColor = _color
@@ -18,6 +20,51 @@ class Bishop(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
             R.drawable.wbishop
         } else {
             R.drawable.bbishop
+        }
+    }
+
+    override fun moveCell(color_: FigureColor) {
+        if (color_ == color) {
+            var dx = 1
+            var dy = 1
+            while (x + dx <= 7 && y + dy <= 7 && Board.gameBoard[y + dy][x + dx] is Empty) {
+                MoveMaker.st.add(Pair(x + dx, y + dy))
+                dx++
+                dy++
+            }
+            if (x + dx <= 7 && y + dy <= 7 && Board.gameBoard[y + dy][x + dx].color != color) {
+                MoveMaker.st.add(Pair(x + dx, y + dy))
+            }
+            dx = -1
+            dy = -1
+            while (x + dx >= 0 && y + dy >= 0 && Board.gameBoard[y + dy][x + dx] is Empty) {
+                MoveMaker.st.add(Pair(x + dx, y + dy))
+                dx--
+                dy--
+            }
+            if (x + dx >= 0 && y + dy >= 0 && Board.gameBoard[y + dy][x + dx].color != color) {
+                MoveMaker.st.add(Pair(x + dx, y + dy))
+            }
+            dx = -1
+            dy = 1
+            while (y + dy <= 7 && x + dx >= 0 && Board.gameBoard[y + dy][x + dx] is Empty) {
+                MoveMaker.st.add(Pair(x + dx, y + dy))
+                dy++
+                dx--
+            }
+            if (y + dy <= 7 && x + dx >= 0 && Board.gameBoard[y + dy][x + dx].color != color) {
+                MoveMaker.st.add(Pair(x + dx, y + dy))
+            }
+            dx = 1
+            dy = -1
+            while (y + dy >= 0 && x + dx <= 7 && Board.gameBoard[y + dy][x + dx] is Empty) {
+                MoveMaker.st.add(Pair(x + dx, y + dy))
+                dy--
+                dx++
+            }
+            if (y + dy >= 0 && x + dx <= 7 && Board.gameBoard[y + dy][x + dx].color != color) {
+                MoveMaker.st.add(Pair(x + dx, y + dy))
+            }
         }
     }
 
