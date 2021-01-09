@@ -115,7 +115,13 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 for (dx in -1..1) {
                     for (dy in -1..1) {
                         if (dx != 0 || dy != 0) {
-                            if (x + dx == newX && y + dy == newY) {
+                            if (x + dx == newX && y + dy == newY && !MoveMaker.st.contains(
+                                    Pair(
+                                        x + dx,
+                                        y + dy
+                                    )
+                                )
+                            ) {
                                 x = newX
                                 y = newY
                                 const = false
