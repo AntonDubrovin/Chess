@@ -1,6 +1,5 @@
 package com.example.mygame.figure
 
-import android.content.Context
 import android.graphics.Canvas
 import com.example.mygame.board.Board
 import com.example.mygame.figure.common.FigureColor
@@ -24,61 +23,61 @@ class Pawn(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
     }
 
     override fun moveCell(color: FigureColor) {
-        if (color == FigureColor.WHITE && x - 1 >= 0 && Board.gameBoard[y - 1][x - 1].color != color) {
+        if (color == FigureColor.WHITE && x - 1 >= 0) {
             MoveMaker.st.add(Pair(x - 1, y - 1))
         }
-        if (color == FigureColor.WHITE && x + 1 <= 7 && Board.gameBoard[y - 1][x + 1].color != color) {
+        if (color == FigureColor.WHITE && x + 1 <= 7) {
             MoveMaker.st.add(Pair(x + 1, y - 1))
         }
-        if (color == FigureColor.BLACK && x - 1 >= 0 && Board.gameBoard[y + 1][x - 1].color != color) {
+        if (color == FigureColor.BLACK && x - 1 >= 0) {
             MoveMaker.st.add(Pair(x - 1, y + 1))
         }
-        if (color == FigureColor.BLACK && x + 1 <= 7 && Board.gameBoard[y + 1][x + 1].color != color) {
+        if (color == FigureColor.BLACK && x + 1 <= 7) {
             MoveMaker.st.add(Pair(x + 1, y + 1))
         }
     }
 
-    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: FigureColor) {
+    override fun showMove(canvas: Canvas, width: Int, turn: FigureColor) {
         if (turn == color) {
             if (color == FigureColor.BLACK) {
                 if (y == 1) {
                     if (Board.gameBoard[y + 1][x] is Empty) {
-                        show(canvas, width, context, y + 1, x)
+                        show(canvas, width, y + 1, x)
                         if (Board.gameBoard[y + 2][x] is Empty) {
-                            show(canvas, width, context, y + 2, x)
+                            show(canvas, width, y + 2, x)
                         }
                     }
                 } else {
                     if (Board.gameBoard[y + 1][x] is Empty) {
-                        show(canvas, width, context, y + 1, x)
+                        show(canvas, width, y + 1, x)
                     }
                 }
             } else if (color == FigureColor.WHITE) {
                 if (y == 6) {
                     if (Board.gameBoard[y - 1][x] is Empty) {
-                        show(canvas, width, context, y - 1, x)
+                        show(canvas, width, y - 1, x)
                         if (Board.gameBoard[y - 2][x] is Empty) {
-                            show(canvas, width, context, y - 2, x)
+                            show(canvas, width, y - 2, x)
                         }
                     }
                 } else {
                     if (Board.gameBoard[y - 1][x] is Empty) {
-                        show(canvas, width, context, y - 1, x)
+                        show(canvas, width, y - 1, x)
                     }
                 }
             }
             if (color == FigureColor.WHITE && x - 1 >= 0 && Board.gameBoard[y - 1][x - 1] !is Empty && Board.gameBoard[y - 1][x - 1].color != color) {
-                showAttack(canvas, width, context, y - 1, x - 1)
+                showAttack(canvas, width, y - 1, x - 1)
             }
             if (color == FigureColor.WHITE && x + 1 <= 7 && Board.gameBoard[y - 1][x + 1] !is Empty && Board.gameBoard[y - 1][x + 1].color != color) {
-                showAttack(canvas, width, context, y - 1, x + 1)
+                showAttack(canvas, width, y - 1, x + 1)
             }
 
             if (color == FigureColor.BLACK && x - 1 >= 0 && Board.gameBoard[y + 1][x - 1] !is Empty && Board.gameBoard[y + 1][x - 1].color != color) {
-                showAttack(canvas, width, context, y + 1, x - 1)
+                showAttack(canvas, width, y + 1, x - 1)
             }
             if (color == FigureColor.BLACK && x + 1 <= 7 && Board.gameBoard[y + 1][x + 1] !is Empty && Board.gameBoard[y + 1][x + 1].color != color) {
-                showAttack(canvas, width, context, y + 1, x + 1)
+                showAttack(canvas, width, y + 1, x + 1)
             }
         }
     }

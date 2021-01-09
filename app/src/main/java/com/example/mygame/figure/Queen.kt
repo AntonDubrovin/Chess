@@ -1,6 +1,5 @@
 package com.example.mygame.figure
 
-import android.content.Context
 import android.graphics.Canvas
 import com.example.mygame.board.Board
 import com.example.mygame.figure.common.FigureColor
@@ -32,7 +31,7 @@ class Queen(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 dx++
                 dy++
             }
-            if (x + dx <= 7 && y + dy <= 7 && Board.gameBoard[y + dy][x + dx].color != color) {
+            if (x + dx <= 7 && y + dy <= 7) {
                 MoveMaker.st.add(Pair(x + dx, y + dy))
             }
             dx = -1
@@ -42,7 +41,7 @@ class Queen(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 dx--
                 dy--
             }
-            if (x + dx >= 0 && y + dy >= 0 && Board.gameBoard[y + dy][x + dx].color != color) {
+            if (x + dx >= 0 && y + dy >= 0) {
                 MoveMaker.st.add(Pair(x + dx, y + dy))
             }
             dx = -1
@@ -52,7 +51,7 @@ class Queen(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 dy++
                 dx--
             }
-            if (y + dy <= 7 && x + dx >= 0 && Board.gameBoard[y + dy][x + dx].color != color) {
+            if (y + dy <= 7 && x + dx >= 0) {
                 MoveMaker.st.add(Pair(x + dx, y + dy))
             }
             dx = 1
@@ -62,7 +61,7 @@ class Queen(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 dy--
                 dx++
             }
-            if (y + dy >= 0 && x + dx <= 7 && Board.gameBoard[y + dy][x + dx].color != color) {
+            if (y + dy >= 0 && x + dx <= 7) {
                 MoveMaker.st.add(Pair(x + dx, y + dy))
             }
         }
@@ -72,7 +71,7 @@ class Queen(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 MoveMaker.st.add(Pair(x + dx, y))
                 dx++
             }
-            if (x + dx <= 7 && Board.gameBoard[y][x + dx].color != color) {
+            if (x + dx <= 7) {
                 MoveMaker.st.add(Pair(x + dx, y))
             }
             dx = -1
@@ -80,7 +79,7 @@ class Queen(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 MoveMaker.st.add(Pair(x + dx, y))
                 dx--
             }
-            if (x + dx >= 0 && Board.gameBoard[y][x + dx].color != color) {
+            if (x + dx >= 0) {
                 MoveMaker.st.add(Pair(x + dx, y))
             }
             var dy = 1
@@ -88,7 +87,7 @@ class Queen(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 MoveMaker.st.add(Pair(x, y + dy))
                 dy++
             }
-            if (y + dy <= 7 && Board.gameBoard[y + dy][x].color != color) {
+            if (y + dy <= 7) {
                 MoveMaker.st.add(Pair(x, y + dy))
             }
             dy = -1
@@ -96,87 +95,87 @@ class Queen(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 MoveMaker.st.add(Pair(x, y + dy))
                 dy--
             }
-            if (y + dy >= 0 && Board.gameBoard[y + dy][x].color != color) {
+            if (y + dy >= 0) {
                 MoveMaker.st.add(Pair(x, y + dy))
             }
         }
 
     }
 
-    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: FigureColor) {
+    override fun showMove(canvas: Canvas, width: Int, turn: FigureColor) {
         if (turn == color) {
             var dx = 1
             var dy = 1
             while (x + dx <= 7 && y + dy <= 7 && Board.gameBoard[y + dy][x + dx] is Empty) {
-                show(canvas, width, context, y + dy, x + dx)
+                show(canvas, width, y + dy, x + dx)
                 dx++
                 dy++
             }
             if (x + dx <= 7 && y + dy <= 7 && Board.gameBoard[y + dy][x + dx].color != color) {
-                showAttack(canvas, width, context, y + dy, x + dx)
+                showAttack(canvas, width, y + dy, x + dx)
             }
             dx = -1
             dy = -1
             while (x + dx >= 0 && y + dy >= 0 && Board.gameBoard[y + dy][x + dx] is Empty) {
-                show(canvas, width, context, y + dy, x + dx)
+                show(canvas, width, y + dy, x + dx)
                 dx--
                 dy--
             }
             if (x + dx >= 0 && y + dy >= 0 && Board.gameBoard[y + dy][x + dx].color != color) {
-                showAttack(canvas, width, context, y + dy, x + dx)
+                showAttack(canvas, width, y + dy, x + dx)
             }
             dx = -1
             dy = 1
             while (y + dy <= 7 && x + dx >= 0 && Board.gameBoard[y + dy][x + dx] is Empty) {
-                show(canvas, width, context, y + dy, x + dx)
+                show(canvas, width, y + dy, x + dx)
                 dy++
                 dx--
             }
             if (y + dy <= 7 && x + dx >= 0 && Board.gameBoard[y + dy][x + dx].color != color) {
-                showAttack(canvas, width, context, y + dy, x + dx)
+                showAttack(canvas, width, y + dy, x + dx)
             }
             dx = 1
             dy = -1
             while (y + dy >= 0 && x + dx <= 7 && Board.gameBoard[y + dy][x + dx] is Empty) {
-                show(canvas, width, context, y + dy, x + dx)
+                show(canvas, width, y + dy, x + dx)
                 dy--
                 dx++
             }
             if (y + dy >= 0 && x + dx <= 7 && Board.gameBoard[y + dy][x + dx].color != color) {
-                showAttack(canvas, width, context, y + dy, x + dx)
+                showAttack(canvas, width, y + dy, x + dx)
             }
 
             dx = 1
             while (x + dx <= 7 && Board.gameBoard[y][x + dx] is Empty) {
-                show(canvas, width, context, y, x + dx)
+                show(canvas, width, y, x + dx)
                 dx++
             }
             if (x + dx <= 7 && Board.gameBoard[y][x + dx].color != color) {
-                showAttack(canvas, width, context, y, x + dx)
+                showAttack(canvas, width, y, x + dx)
             }
             dx = -1
             while (x + dx >= 0 && Board.gameBoard[y][x + dx] is Empty) {
-                show(canvas, width, context, y, x + dx)
+                show(canvas, width, y, x + dx)
                 dx--
             }
             if (x + dx >= 0 && Board.gameBoard[y][x + dx].color != color) {
-                showAttack(canvas, width, context, y, x + dx)
+                showAttack(canvas, width, y, x + dx)
             }
             dy = 1
             while (y + dy <= 7 && Board.gameBoard[y + dy][x] is Empty) {
-                show(canvas, width, context, y + dy, x)
+                show(canvas, width, y + dy, x)
                 dy++
             }
             if (y + dy <= 7 && Board.gameBoard[y + dy][x].color != color) {
-                showAttack(canvas, width, context, y + dy, x)
+                showAttack(canvas, width, y + dy, x)
             }
             dy = -1
             while (y + dy >= 0 && Board.gameBoard[y + dy][x] is Empty) {
-                show(canvas, width, context, y + dy, x)
+                show(canvas, width, y + dy, x)
                 dy--
             }
             if (y + dy >= 0 && Board.gameBoard[y + dy][x].color != color) {
-                showAttack(canvas, width, context, y + dy, x)
+                showAttack(canvas, width, y + dy, x)
             }
         }
     }

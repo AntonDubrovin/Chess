@@ -7,7 +7,6 @@ import com.example.mygame.player.common.AbstractPlayer
 
 class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
 
-
     companion object {
         var st: MutableSet<Pair<Int, Int>> = mutableSetOf()
     }
@@ -16,10 +15,9 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
     val black: AbstractPlayer = _black
     var touchX: Int = -1
     var touchY: Int = -1
-    var currentFigure: AbstractFigure = Empty(-1, -1, FigureColor.EMPTY)
+    private var currentFigure: AbstractFigure = Empty(-1, -1, FigureColor.EMPTY)
     var turn = FigureColor.WHITE
-    var flag = false
-
+    private var flag = false
 
     private fun findAttack(color: FigureColor) {
         for (i in 0..7) {
@@ -31,7 +29,6 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
         }
     }
 
-
     private fun choose(row: Int, column: Int) {
         when (turn) {
             FigureColor.WHITE -> {
@@ -41,13 +38,14 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                 currentFigure = black.chooseFigure(row, column)
             }
             else -> {
-
             }
         }
         if (currentFigure !is Empty) {
             flag = true
             touchX = row
             touchY = column
+            BoardView.instance.x = touchX
+            BoardView.instance.y = touchY
             BoardView.instance.invalidate()
         }
     }
@@ -62,6 +60,8 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                         Board.gameBoard[column][row] = currentFigure
                         touchX = -1
                         touchY = -1
+                        BoardView.instance.x = -1
+                        BoardView.instance.y = -1
                         changeTurn(turn)
                         flag = false
                         st = mutableSetOf()
@@ -76,6 +76,8 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                         touchX = -1
                         touchY = -1
                         changeTurn(turn)
+                        BoardView.instance.x = -1
+                        BoardView.instance.y = -1
                         flag = false
                         st = mutableSetOf()
                         BoardView.instance.invalidate()
@@ -88,6 +90,8 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
         } else {
             touchX = row
             touchY = column
+            BoardView.instance.x = touchX
+            BoardView.instance.y = touchY
             currentFigure = Board.gameBoard[column][row]
             flag = true
             BoardView.instance.invalidate()
@@ -103,12 +107,16 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
     }
 
     private fun notTurn(turn: FigureColor): FigureColor {
-        if (turn == FigureColor.WHITE) {
-            return FigureColor.BLACK
-        } else if (turn == FigureColor.BLACK) {
-            return FigureColor.WHITE
-        } else {
-            return turn
+        return when (turn) {
+            FigureColor.WHITE -> {
+                FigureColor.BLACK
+            }
+            FigureColor.BLACK -> {
+                FigureColor.WHITE
+            }
+            else -> {
+                turn
+            }
         }
     }
 

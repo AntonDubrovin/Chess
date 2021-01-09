@@ -12,10 +12,10 @@ class UserPlayer(override var time: Float = 300f, override var color: FigureColo
     override val rock: Int = 0
 
     override fun chooseFigure(row: Int, column: Int): AbstractFigure {
-        if (Board.gameBoard[column][row].color == color) {
-            return Board.gameBoard[column][row]
+        return if (Board.gameBoard[column][row].color == color) {
+            Board.gameBoard[column][row]
         } else {
-            return Empty(-1, -1, FigureColor.EMPTY)
+            Empty(-1, -1, FigureColor.EMPTY)
         }
     }
 

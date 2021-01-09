@@ -1,6 +1,5 @@
 package com.example.mygame.figure
 
-import android.content.Context
 import android.graphics.Canvas
 import com.example.mygame.board.Board
 import com.example.mygame.figure.common.FigureColor
@@ -13,7 +12,7 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
     override var y: Int = _y
     override val color: FigureColor = _color
     override val picture: Int
-    var rock = false
+    private var rock = false
     override var const = false
 
     init {
@@ -31,7 +30,7 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                     if (dx != 0 || dy != 0) {
                         if (x + dx in 0..7 && y + dy in 0..7 && Board.gameBoard[y + dy][x + dx] is Empty) {
                             MoveMaker.st.add(Pair(x + dx, y + dy))
-                        } else if (x + dx in 0..7 && y + dy in 0..7 && Board.gameBoard[y + dy][x + dx].color != color) {
+                        } else if (x + dx in 0..7 && y + dy in 0..7) {
                             MoveMaker.st.add(Pair(x + dx, y + dy))
                         }
                     }
@@ -40,7 +39,7 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
         }
     }
 
-    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: FigureColor) {
+    override fun showMove(canvas: Canvas, width: Int, turn: FigureColor) {
         if (turn == color) {
             for (dx in -1..1) {
                 for (dy in -1..1) {
@@ -48,9 +47,16 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                         if (x + dx in 0..7 && y + dy in 0..7 && Board.gameBoard[y + dy][x + dx] is Empty &&
                             !MoveMaker.st.contains(Pair(x + dx, y + dy))
                         ) {
-                            show(canvas, width, context, y + dy, x + dx)
-                        } else if (x + dx in 0..7 && y + dy in 0..7 && Board.gameBoard[y + dy][x + dx].color != color && Board.gameBoard[y + dy][x + dx] !is Empty) {
-                            showAttack(canvas, width, context, y + dy, x + dx)
+                            show(canvas, width, y + dy, x + dx)
+                        } else if (x + dx in 0..7 && y + dy in 0..7 && Board.gameBoard[y + dy][x + dx].color != color &&
+                            Board.gameBoard[y + dy][x + dx] !is Empty && !MoveMaker.st.contains(
+                                Pair(
+                                    x + dx,
+                                    y + dy
+                                )
+                            )
+                        ) {
+                            showAttack(canvas, width, y + dy, x + dx)
                         }
                     }
                 }
@@ -66,7 +72,7 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 ) && !MoveMaker.st.contains(Pair(4, 7)) &&
                 Board.gameBoard[7][7] is Rook && Board.gameBoard[7][7].color == FigureColor.WHITE && Board.gameBoard[7][7].const
             ) {
-                show(canvas, width, context, 7, 6)
+                show(canvas, width, 7, 6)
             }
             if (Board.gameBoard[7][3] is Empty && Board.gameBoard[7][2] is Empty && Board.gameBoard[7][1] is Empty &&
                 !MoveMaker.st.contains(Pair(3, 7)) && !MoveMaker.st.contains(
@@ -77,7 +83,7 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 ) && !MoveMaker.st.contains(Pair(4, 7)) && !MoveMaker.st.contains(Pair(1, 7)) &&
                 Board.gameBoard[7][0] is Rook && Board.gameBoard[7][0].color == FigureColor.WHITE && Board.gameBoard[7][0].const
             ) {
-                show(canvas, width, context, 7, 2)
+                show(canvas, width, 7, 2)
             }
         } else if (color == FigureColor.BLACK && y == 0 && x == 4 && !rock && !const) {
             if (Board.gameBoard[0][5] is Empty && Board.gameBoard[0][6] is Empty &&
@@ -89,7 +95,7 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 ) && !MoveMaker.st.contains(Pair(4, 0)) &&
                 Board.gameBoard[0][7] is Rook && Board.gameBoard[0][7].color == FigureColor.BLACK && Board.gameBoard[0][7].const
             ) {
-                show(canvas, width, context, 0, 6)
+                show(canvas, width, 0, 6)
             }
             if (Board.gameBoard[0][3] is Empty && Board.gameBoard[0][2] is Empty && Board.gameBoard[0][1] is Empty &&
                 !MoveMaker.st.contains(Pair(3, 0)) && !MoveMaker.st.contains(
@@ -100,7 +106,7 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 ) && !MoveMaker.st.contains(Pair(4, 0)) && !MoveMaker.st.contains(Pair(1, 0)) &&
                 Board.gameBoard[0][0] is Rook && Board.gameBoard[0][0].color == FigureColor.BLACK && Board.gameBoard[0][0].const
             ) {
-                show(canvas, width, context, 0, 2)
+                show(canvas, width, 0, 2)
             }
         }
     }

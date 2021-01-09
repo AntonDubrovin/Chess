@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import com.example.mygame.figure.common.FigureColor
 import com.example.mygame.MainActivity
 import com.example.mygame.figure.common.MoveMaker
@@ -30,10 +31,12 @@ class BoardView @JvmOverloads constructor(
         lateinit var instance: BoardView
             private set
     }
-    
-    var count = 0
+
+    private var count = 0
     var turn: FigureColor = FigureColor.WHITE
     private var moveMaker: MoveMaker
+    var x: Int = -1
+    var y: Int = -1
 
     init {
         val a: TypedArray = context.obtainStyledAttributes(
@@ -46,6 +49,8 @@ class BoardView @JvmOverloads constructor(
             board.setOnTouchListener { _, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
+                        println(event.x)
+                        println(event.y)
                         moveMaker.makeTurn(transpose(event.x), transpose(event.y))
                     }
                 }
@@ -70,6 +75,13 @@ class BoardView @JvmOverloads constructor(
         style = Paint.Style.FILL
     }
 
+    private val paintSelected = Paint().apply {
+        color = Color.parseColor("#B3C0C0C0")
+        isAntiAlias = true
+        strokeWidth = 10F
+        style = Paint.Style.FILL
+    }
+
     private fun transpose(x: Float): Int {
         return x.toInt() / (width / 8)
     }
@@ -82,6 +94,10 @@ class BoardView @JvmOverloads constructor(
             (column * (width / 8)).toFloat(),
             paint
         )
+    }
+
+    private fun drawSelected(row: Int, column: Int, canvas: Canvas) {
+        drawCell(row, column, canvas, paintSelected)
     }
 
     private fun drawFigure(canvas: Canvas, figure: AbstractFigure) {
@@ -100,10 +116,6 @@ class BoardView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        println(
-            Board.gameBoard[7][3] is Empty && Board.gameBoard[7][2] is Empty && Board.gameBoard[7][1] is Empty &&
-                    Board.gameBoard[7][0].color == FigureColor.WHITE && Board.gameBoard[7][0] is Rook && Board.gameBoard[7][0].const
-        )
         count++
         for (i in 1..8) {
             for (j in 1..8) {
@@ -114,12 +126,14 @@ class BoardView @JvmOverloads constructor(
                 }
             }
         }
+        if (x != -1 && y != -1) {
+            drawSelected(x + 1, y + 1, canvas)
+        }
         drawFigures(canvas)
         if (moveMaker.touchX != -1 && moveMaker.touchY != -1) {
             Board.gameBoard[moveMaker.touchY][moveMaker.touchX].showMove(
                 canvas,
                 width,
-                context,
                 moveMaker.turn
             )
         }

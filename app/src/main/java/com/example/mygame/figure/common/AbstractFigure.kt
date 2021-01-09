@@ -12,10 +12,10 @@ abstract class AbstractFigure : FigureInterface {
 
     abstract fun moveCell(color: FigureColor)
 
-    abstract fun showMove(canvas: Canvas, width: Int, context: Context, turn: FigureColor)
+    abstract fun showMove(canvas: Canvas, width: Int, turn: FigureColor)
 
     abstract fun makeMove(newX: Int, newY: Int, turn: FigureColor): Boolean
-    fun draw(canvas: Canvas, width: Int, context: Context): Unit {
+    fun draw(canvas: Canvas, width: Int, context: Context) {
         val paintWhite = Paint().apply {
             color = Color.parseColor("#DEB887")
             isAntiAlias = true
@@ -35,7 +35,7 @@ abstract class AbstractFigure : FigureInterface {
         )
     }
 
-    fun show(canvas: Canvas, width: Int, context: Context, row: Int, column: Int) {
+    fun show(canvas: Canvas, width: Int, row: Int, column: Int) {
         val paintBlack = Paint().apply {
             color = Color.BLACK
             isAntiAlias = true
@@ -62,7 +62,7 @@ abstract class AbstractFigure : FigureInterface {
         )
     }
 
-    fun showAttack(canvas: Canvas, width: Int, context: Context, row: Int, column: Int) {
+    fun showAttack(canvas: Canvas, width: Int, row: Int, column: Int) {
         val paintAttack = Paint().apply {
             color = Color.parseColor("#ccFF4500")
             isAntiAlias = true

@@ -16,7 +16,7 @@ class Empty(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
 
     }
 
-    override fun showMove(canvas: Canvas, width: Int, context: Context, turn: FigureColor) {
+    override fun showMove(canvas: Canvas, width: Int, turn: FigureColor) {
     }
 
     override fun makeMove(newX: Int, newY: Int, turn: FigureColor): Boolean {
