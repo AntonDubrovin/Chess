@@ -1,13 +1,16 @@
 package com.example.mygame.player
 
+import com.example.mygame.MainActivity
 import com.example.mygame.board.Board
 import com.example.mygame.figure.common.FigureColor
 import com.example.mygame.figure.Empty
 import com.example.mygame.figure.common.AbstractFigure
 import com.example.mygame.player.common.AbstractPlayer
+import kotlinx.android.synthetic.main.activity_main.*
 
-class UserPlayer(override var time: Float = 300f, override var color: FigureColor) :
+class UserPlayer(override var time: Long = 300, override var color: FigureColor) :
     AbstractPlayer() {
+
 
     override val rock: Int = 0
 

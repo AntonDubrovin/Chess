@@ -6,12 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <com.example.mygame.board.TimerView
+        android:id="@+id/timerBlack"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/board"
+        app:timerColor="black"
+        />
+
     <com.example.mygame.board.BoardView
         android:id="@+id/board"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/timerWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/timerBlack" />
+
+
+    <com.example.mygame.board.TimerView
+        android:id="@+id/timerWhite"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/board"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:timerColor="white"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,19 @@
 package com.example.mygame.figure.common
 
+import com.example.mygame.MainActivity
 import com.example.mygame.board.Board
 import com.example.mygame.board.BoardView
 import com.example.mygame.figure.Empty
 import com.example.mygame.player.common.AbstractPlayer
+import kotlin.math.floor
 
 class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
 
     companion object {
+
         var st: MutableSet<Pair<Int, Int>> = mutableSetOf()
     }
+
 
     val white: AbstractPlayer = _white
     val black: AbstractPlayer = _black
@@ -18,6 +22,9 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
     private var currentFigure: AbstractFigure = Empty(-1, -1, FigureColor.EMPTY)
     var turn = FigureColor.WHITE
     private var flag = false
+
+
+
 
     private fun findAttack(color: FigureColor) {
         for (i in 0..7) {
@@ -119,6 +126,9 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
             }
         }
     }
+
+    var timeS: Float = 0f
+    var timeCurrent: Float = 0f
 
     fun makeTurn(row: Int, column: Int) {
         findAttack(notTurn(turn))

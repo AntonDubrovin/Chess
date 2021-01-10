@@ -15,11 +15,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var blackPlayer: AbstractPlayer
 
     companion object {
+
         lateinit var instance: MainActivity
             private set
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         instance = this
@@ -31,4 +32,5 @@ class MainActivity : AppCompatActivity() {
         par.height = 1080
         board.layoutParams = par
     }
+
 }

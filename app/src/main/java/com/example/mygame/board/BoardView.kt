@@ -34,7 +34,7 @@ class BoardView @JvmOverloads constructor(
 
     private var count = 0
     var turn: FigureColor = FigureColor.WHITE
-    private var moveMaker: MoveMaker
+    var moveMaker: MoveMaker
     var x: Int = -1
     var y: Int = -1
 

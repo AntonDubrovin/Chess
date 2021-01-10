@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <declare-styleable name="LifeView"></declare-styleable>
+    <declare-styleable name="TimerView">
+        <attr name="timerColor" format="string"/>
+    </declare-styleable>
     <declare-styleable name="BoardView"></declare-styleable>
+
 </resources>
