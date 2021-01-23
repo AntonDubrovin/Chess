@@ -25,14 +25,14 @@ abstract class AbstractFigure : FigureInterface {
         }
 
         val icon = BitmapFactory.decodeResource(
-                context.resources,
-                picture
+            context.resources,
+            picture
         )
         canvas.drawBitmap(
-                Bitmap.createScaledBitmap(icon, width / 8, width / 8, true),
-                0f + x * (width / 8),
-                0f + y * (width / 8),
-                paintWhite
+            Bitmap.createScaledBitmap(icon, width / 8, width / 8, true),
+            0f + x * (width / 8),
+            0f + y * (width / 8),
+            paintWhite
         )
     }
 
@@ -51,16 +51,16 @@ abstract class AbstractFigure : FigureInterface {
                 style = Paint.Style.FILL
             }
             canvas.drawCircle(
-                    0f + (row + dx) * (width / 8) + width / 16,
-                    0f + (column + dy) * (width / 8) + width / 16,
-                    (width.toFloat() / 64),
-                    paintBlack
+                0f + (row + dx) * (width / 8) + width / 16,
+                0f + (column + dy) * (width / 8) + width / 16,
+                (width.toFloat() / 64),
+                paintBlack
             )
             canvas.drawCircle(
-                    0f + (row + dx) * (width / 8) + width / 16,
-                    0f + (column + dy) * (width / 8) + width / 16,
-                    (width.toFloat() / 90),
-                    paintWhite
+                0f + (row + dx) * (width / 8) + width / 16,
+                0f + (column + dy) * (width / 8) + width / 16,
+                (width.toFloat() / 90),
+                paintWhite
             )
         }
     }
@@ -74,11 +74,11 @@ abstract class AbstractFigure : FigureInterface {
                 style = Paint.Style.STROKE
             }
             canvas.drawRect(
-                    0f + (row + dx) * (width / 8) + 1,
-                    0f + (column + dy) * (width / 8) + 1,
-                    0f + (row + dx) * (width / 8) + width / 8 - 1,
-                    0f + (column + dy) * (width / 8) + width / 8 - 1,
-                    paintAttack
+                0f + (row + dx) * (width / 8) + 1,
+                0f + (column + dy) * (width / 8) + 1,
+                0f + (row + dx) * (width / 8) + width / 8 - 1,
+                0f + (column + dy) * (width / 8) + width / 8 - 1,
+                paintAttack
             )
         }
     }

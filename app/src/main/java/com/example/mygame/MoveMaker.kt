@@ -90,7 +90,7 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                 FigureColor.WHITE -> {
                     if (white.moveFigure(currentFigure, row, column)) {
                         Board.gameBoard[touchY][touchX] =
-                                Empty(touchX, touchY, FigureColor.EMPTY)
+                            Empty(touchX, touchY, FigureColor.EMPTY)
                         Board.gameBoard[column][row] = currentFigure
                         touchX = -1
                         touchY = -1
@@ -99,13 +99,14 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                         changeTurn(turn)
                         flag = false
                         wrongMove = mutableSetOf()
+                        checkKing(turn)
                         BoardView.instance.invalidate()
                     }
                 }
                 FigureColor.BLACK -> {
                     if (black.moveFigure(currentFigure, row, column)) {
                         Board.gameBoard[touchY][touchX] =
-                                Empty(touchX, touchY, FigureColor.EMPTY)
+                            Empty(touchX, touchY, FigureColor.EMPTY)
                         Board.gameBoard[column][row] = currentFigure
                         touchX = -1
                         touchY = -1
@@ -114,6 +115,7 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                         BoardView.instance.y = -1
                         flag = false
                         wrongMove = mutableSetOf()
+                        checkKing(turn)
                         BoardView.instance.invalidate()
                     }
 
@@ -161,10 +163,26 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                 choose(row, column)
             } else {
                 moveFigure(row, column)
+
             }
         }
     }
 
+    private fun checkKing(color: FigureColor) {
+        findAttack(notTurn(color))
+        for (i in wrongMove) {
+            if (Board.gameBoard[i.second][i.first] is King && Board.gameBoard[i.second][i.first].color == color) {
+                BoardView.instance.check = true
+                BoardView.instance.invalidate()
+            }
+        }
+        wrongMove = mutableSetOf()
+    }
+
+    private fun checkRem(color: FigureColor) {
+        BoardView.instance.check = false
+        BoardView.instance.invalidate()
+    }
 
     private fun checkMove(row: Int, column: Int, currentFigure: AbstractFigure): Boolean {
         return (Board.gameBoard[column][row].color != currentFigure.color)

@@ -14,6 +14,7 @@ import com.example.mygame.MainActivity
 import com.example.mygame.MoveMaker
 import com.example.mygame.R
 import com.example.mygame.figure.Empty
+import com.example.mygame.figure.King
 import com.example.mygame.figure.common.AbstractFigure
 import kotlinx.android.synthetic.main.activity_main.view.*
 
@@ -30,6 +31,7 @@ class BoardView @JvmOverloads constructor(
             private set
     }
 
+    var check = false
     private var count = 0
     var turn: FigureColor = FigureColor.WHITE
     var moveMaker: MoveMaker
@@ -80,6 +82,13 @@ class BoardView @JvmOverloads constructor(
         style = Paint.Style.FILL
     }
 
+    private val paintCheck = Paint().apply {
+        color = Color.parseColor("#D50000")
+        isAntiAlias = true
+        strokeWidth = 10F
+        style = Paint.Style.FILL
+    }
+
     private fun transpose(x: Float): Int {
         return x.toInt() / (width / 8)
     }
@@ -112,6 +121,18 @@ class BoardView @JvmOverloads constructor(
         }
     }
 
+    private fun drawCheck(canvas: Canvas) {
+        for (i in 0..7) {
+            for (j in 0..7) {
+                if (Board.gameBoard[i][j] is King && Board.gameBoard[i][j].color == moveMaker.turn) {
+                    drawCell(j+1, i+1, canvas, paintCheck)
+                    check = false
+                }
+            }
+        }
+
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         count++
@@ -124,6 +145,10 @@ class BoardView @JvmOverloads constructor(
                 }
             }
         }
+        if (check) {
+            drawCheck(canvas)
+        }
+
         if (x != -1 && y != -1) {
             drawSelected(x + 1, y + 1, canvas)
         }
