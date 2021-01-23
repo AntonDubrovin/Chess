@@ -83,39 +83,32 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
         }
     }
 
+    private fun moveFigureCommon(column: Int, row: Int) {
+        Board.gameBoard[touchY][touchX] =
+                Empty(touchX, touchY, FigureColor.EMPTY)
+        Board.gameBoard[column][row] = currentFigure
+        touchX = -1
+        touchY = -1
+        changeTurn(turn)
+        BoardView.instance.x = -1
+        BoardView.instance.y = -1
+        flag = false
+        underAttack = mutableSetOf()
+        checkCheck(turn)
+        BoardView.instance.invalidate()
+    }
+
     private fun moveFigure(row: Int, column: Int) {
         if (checkMove(row, column, currentFigure)) {
             when (turn) {
                 FigureColor.WHITE -> {
                     if (white.moveFigure(currentFigure, row, column)) {
-                        Board.gameBoard[touchY][touchX] =
-                                Empty(touchX, touchY, FigureColor.EMPTY)
-                        Board.gameBoard[column][row] = currentFigure
-                        touchX = -1
-                        touchY = -1
-                        BoardView.instance.x = -1
-                        BoardView.instance.y = -1
-                        changeTurn(turn)
-                        flag = false
-                        underAttack = mutableSetOf()
-                        checkKing(turn)
-                        BoardView.instance.invalidate()
+                        moveFigureCommon(column, row)
                     }
                 }
                 FigureColor.BLACK -> {
                     if (black.moveFigure(currentFigure, row, column)) {
-                        Board.gameBoard[touchY][touchX] =
-                                Empty(touchX, touchY, FigureColor.EMPTY)
-                        Board.gameBoard[column][row] = currentFigure
-                        touchX = -1
-                        touchY = -1
-                        changeTurn(turn)
-                        BoardView.instance.x = -1
-                        BoardView.instance.y = -1
-                        flag = false
-                        underAttack = mutableSetOf()
-                        checkKing(turn)
-                        BoardView.instance.invalidate()
+                        moveFigureCommon(column, row)
                     }
 
                 }
@@ -162,12 +155,11 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                 choose(row, column)
             } else {
                 moveFigure(row, column)
-
             }
         }
     }
 
-    private fun checkKing(color: FigureColor) {
+    private fun checkCheck(color: FigureColor) {
         findAttack(notTurn(color))
         for (i in underAttack) {
             if (Board.gameBoard[i.second][i.first] is King && Board.gameBoard[i.second][i.first].color == color) {

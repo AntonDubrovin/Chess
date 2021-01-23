@@ -61,28 +61,32 @@ class BoardView @JvmOverloads constructor(
     }
 
     private val paintWhite = Paint().apply {
-        color = Color.parseColor("#DEB887")
+        //color = Color.parseColor("#DEB887")
+        color = Color.parseColor("#B3FFD180")
         isAntiAlias = true
         strokeWidth = 10F
         style = Paint.Style.FILL
     }
 
     private val paintBlack = Paint().apply {
-        color = Color.parseColor("#8B4513")
+        //color = Color.parseColor("#8B4513")
+        color = Color.parseColor("#E6795548")
         isAntiAlias = true
         strokeWidth = 10F
         style = Paint.Style.FILL
     }
 
     private val paintSelected = Paint().apply {
-        color = Color.parseColor("#B3C0C0C0")
+        //color = Color.parseColor("#B3C0C0C0")
+        color = Color.parseColor("#B3B0BEC5")
         isAntiAlias = true
         strokeWidth = 10F
         style = Paint.Style.FILL
     }
 
     private val paintCheck = Paint().apply {
-        color = Color.parseColor("#D50000")
+        //color = Color.parseColor("#D50000")
+        color = Color.parseColor("#B71C1C")
         isAntiAlias = true
         strokeWidth = 10F
         style = Paint.Style.FILL

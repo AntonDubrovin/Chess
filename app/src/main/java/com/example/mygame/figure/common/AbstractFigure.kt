@@ -24,14 +24,14 @@ abstract class AbstractFigure : FigureInterface {
             style = Paint.Style.FILL
         }
         val icon = BitmapFactory.decodeResource(
-            context.resources,
-            picture
+                context.resources,
+                picture
         )
         canvas.drawBitmap(
-            Bitmap.createScaledBitmap(icon, width / 8, width / 8, true),
-            0f + x * (width / 8),
-            0f + y * (width / 8),
-            paintWhite
+                Bitmap.createScaledBitmap(icon, width / 8, width / 8, true),
+                0f + x * (width / 8),
+                0f + y * (width / 8),
+                paintWhite
         )
     }
 
@@ -50,16 +50,16 @@ abstract class AbstractFigure : FigureInterface {
                 style = Paint.Style.FILL
             }
             canvas.drawCircle(
-                0f + (row + dx) * (width / 8) + width / 16,
-                0f + (column + dy) * (width / 8) + width / 16,
-                (width.toFloat() / 64),
-                paintBlack
+                    0f + (row + dx) * (width / 8) + width / 16,
+                    0f + (column + dy) * (width / 8) + width / 16,
+                    (width.toFloat() / 64),
+                    paintBlack
             )
             canvas.drawCircle(
-                0f + (row + dx) * (width / 8) + width / 16,
-                0f + (column + dy) * (width / 8) + width / 16,
-                (width.toFloat() / 90),
-                paintWhite
+                    0f + (row + dx) * (width / 8) + width / 16,
+                    0f + (column + dy) * (width / 8) + width / 16,
+                    (width.toFloat() / 90),
+                    paintWhite
             )
         }
     }
@@ -67,17 +67,17 @@ abstract class AbstractFigure : FigureInterface {
     fun showAttack(canvas: Canvas, width: Int, column: Int, dy: Int, row: Int, dx: Int) {
         if (MoveMaker.checkChoose(column, dy, row, dx, color)) {
             val paintAttack = Paint().apply {
-                color = Color.parseColor("#ccFF4500")
+                color = Color.parseColor("#40FF5722")
+                //color = Color.parseColor("#ccFF4500")
                 isAntiAlias = true
-                strokeWidth = 10F
-                style = Paint.Style.STROKE
+                style = Paint.Style.FILL
             }
             canvas.drawRect(
-                0f + (row + dx) * (width / 8) + 1,
-                0f + (column + dy) * (width / 8) + 1,
-                0f + (row + dx) * (width / 8) + width / 8 - 1,
-                0f + (column + dy) * (width / 8) + width / 8 - 1,
-                paintAttack
+                    0f + (row + dx) * (width / 8) + 1,
+                    0f + (column + dy) * (width / 8) + 1,
+                    0f + (row + dx) * (width / 8) + width / 8 - 1,
+                    0f + (column + dy) * (width / 8) + width / 8 - 1,
+                    paintAttack
             )
         }
     }
