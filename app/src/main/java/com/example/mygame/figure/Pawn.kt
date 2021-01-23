@@ -24,16 +24,16 @@ class Pawn(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
 
     override fun moveCell(color: FigureColor) {
         if (color == FigureColor.WHITE && x - 1 >= 0) {
-            MoveMaker.wrongMove.add(Pair(x - 1, y - 1))
+            MoveMaker.underAttack.add(Pair(x - 1, y - 1))
         }
         if (color == FigureColor.WHITE && x + 1 <= 7) {
-            MoveMaker.wrongMove.add(Pair(x + 1, y - 1))
+            MoveMaker.underAttack.add(Pair(x + 1, y - 1))
         }
         if (color == FigureColor.BLACK && x - 1 >= 0) {
-            MoveMaker.wrongMove.add(Pair(x - 1, y + 1))
+            MoveMaker.underAttack.add(Pair(x - 1, y + 1))
         }
         if (color == FigureColor.BLACK && x + 1 <= 7) {
-            MoveMaker.wrongMove.add(Pair(x + 1, y + 1))
+            MoveMaker.underAttack.add(Pair(x + 1, y + 1))
         }
     }
 

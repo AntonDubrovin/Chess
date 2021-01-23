@@ -29,9 +29,9 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 for (dy in -1..1) {
                     if (dx != 0 || dy != 0) {
                         if (x + dx in 0..7 && y + dy in 0..7 && Board.gameBoard[y + dy][x + dx] is Empty) {
-                            MoveMaker.wrongMove.add(Pair(x + dx, y + dy))
+                            MoveMaker.underAttack.add(Pair(x + dx, y + dy))
                         } else if (x + dx in 0..7 && y + dy in 0..7) {
-                            MoveMaker.wrongMove.add(Pair(x + dx, y + dy))
+                            MoveMaker.underAttack.add(Pair(x + dx, y + dy))
                         }
                     }
                 }
@@ -45,11 +45,11 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                 for (dy in -1..1) {
                     if (dx != 0 || dy != 0) {
                         if (x + dx in 0..7 && y + dy in 0..7 && Board.gameBoard[y + dy][x + dx] is Empty &&
-                                !MoveMaker.wrongMove.contains(Pair(x + dx, y + dy))
+                                !MoveMaker.underAttack.contains(Pair(x + dx, y + dy))
                         ) {
                             show(canvas, width, y, dy, x, dx)
                         } else if (x + dx in 0..7 && y + dy in 0..7 && Board.gameBoard[y + dy][x + dx].color != color &&
-                                Board.gameBoard[y + dy][x + dx] !is Empty && !MoveMaker.wrongMove.contains(
+                                Board.gameBoard[y + dy][x + dx] !is Empty && !MoveMaker.underAttack.contains(
                                         Pair(
                                                 x + dx,
                                                 y + dy
@@ -64,46 +64,46 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
         }
         if (color == FigureColor.WHITE && y == 7 && x == 4 && !rock && !const) {
             if (Board.gameBoard[7][5] is Empty && Board.gameBoard[7][6] is Empty &&
-                    !MoveMaker.wrongMove.contains(Pair(5, 7)) && !MoveMaker.wrongMove.contains(
+                    !MoveMaker.underAttack.contains(Pair(5, 7)) && !MoveMaker.underAttack.contains(
                             Pair(
                                     6,
                                     7
                             )
-                    ) && !MoveMaker.wrongMove.contains(Pair(4, 7)) &&
+                    ) && !MoveMaker.underAttack.contains(Pair(4, 7)) &&
                     Board.gameBoard[7][7] is Rook && Board.gameBoard[7][7].color == FigureColor.WHITE && Board.gameBoard[7][7].const
             ) {
                 show(canvas, width, 7, 0, 4, 2)
             }
             if (Board.gameBoard[7][3] is Empty && Board.gameBoard[7][2] is Empty && Board.gameBoard[7][1] is Empty &&
-                    !MoveMaker.wrongMove.contains(Pair(3, 7)) && !MoveMaker.wrongMove.contains(
+                    !MoveMaker.underAttack.contains(Pair(3, 7)) && !MoveMaker.underAttack.contains(
                             Pair(
                                     2,
                                     7
                             )
-                    ) && !MoveMaker.wrongMove.contains(Pair(4, 7)) && !MoveMaker.wrongMove.contains(Pair(1, 7)) &&
+                    ) && !MoveMaker.underAttack.contains(Pair(4, 7)) && !MoveMaker.underAttack.contains(Pair(1, 7)) &&
                     Board.gameBoard[7][0] is Rook && Board.gameBoard[7][0].color == FigureColor.WHITE && Board.gameBoard[7][0].const
             ) {
                 show(canvas, width, 7, 0, 4, -2)
             }
         } else if (color == FigureColor.BLACK && y == 0 && x == 4 && !rock && !const) {
             if (Board.gameBoard[0][5] is Empty && Board.gameBoard[0][6] is Empty &&
-                    !MoveMaker.wrongMove.contains(Pair(5, 0)) && !MoveMaker.wrongMove.contains(
+                    !MoveMaker.underAttack.contains(Pair(5, 0)) && !MoveMaker.underAttack.contains(
                             Pair(
                                     6,
                                     0
                             )
-                    ) && !MoveMaker.wrongMove.contains(Pair(4, 0)) &&
+                    ) && !MoveMaker.underAttack.contains(Pair(4, 0)) &&
                     Board.gameBoard[0][7] is Rook && Board.gameBoard[0][7].color == FigureColor.BLACK && Board.gameBoard[0][7].const
             ) {
                 show(canvas, width, 0, 0, 4, 2)
             }
             if (Board.gameBoard[0][3] is Empty && Board.gameBoard[0][2] is Empty && Board.gameBoard[0][1] is Empty &&
-                    !MoveMaker.wrongMove.contains(Pair(3, 0)) && !MoveMaker.wrongMove.contains(
+                    !MoveMaker.underAttack.contains(Pair(3, 0)) && !MoveMaker.underAttack.contains(
                             Pair(
                                     2,
                                     0
                             )
-                    ) && !MoveMaker.wrongMove.contains(Pair(4, 0)) && !MoveMaker.wrongMove.contains(Pair(1, 0)) &&
+                    ) && !MoveMaker.underAttack.contains(Pair(4, 0)) && !MoveMaker.underAttack.contains(Pair(1, 0)) &&
                     Board.gameBoard[0][0] is Rook && Board.gameBoard[0][0].color == FigureColor.BLACK && Board.gameBoard[0][0].const
             ) {
                 show(canvas, width, 0, 0, 4, -2)
@@ -115,13 +115,13 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
             newX: Int,
             newY: Int,
             turn: FigureColor
-    ): Boolean { //TODO ДОХУЯ ВСЕГО ПОМОГИТЕ
+    ): Boolean {
         if (turn == color) {
             if (Board.gameBoard[newY][newX] is Empty || Board.gameBoard[newY][newX] !is Empty && Board.gameBoard[newY][newX].color != color) {
                 for (dx in -1..1) {
                     for (dy in -1..1) {
                         if (dx != 0 || dy != 0) {
-                            if (x + dx == newX && y + dy == newY && !MoveMaker.wrongMove.contains(
+                            if (x + dx == newX && y + dy == newY && !MoveMaker.underAttack.contains(
                                             Pair(
                                                     x + dx,
                                                     y + dy
@@ -140,12 +140,12 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
             if (color == FigureColor.WHITE && y == 7 && x == 4 && !rock && !const) {
                 if (newX == 6 && newY == 7) {
                     if (Board.gameBoard[7][5] is Empty && Board.gameBoard[7][6] is Empty &&
-                            !MoveMaker.wrongMove.contains(Pair(5, 7)) && !MoveMaker.wrongMove.contains(
+                            !MoveMaker.underAttack.contains(Pair(5, 7)) && !MoveMaker.underAttack.contains(
                                     Pair(
                                             6,
                                             7
                                     )
-                            ) && !MoveMaker.wrongMove.contains(Pair(4, 7)) &&
+                            ) && !MoveMaker.underAttack.contains(Pair(4, 7)) &&
                             Board.gameBoard[7][7].color == FigureColor.WHITE && Board.gameBoard[7][7] is Rook && Board.gameBoard[7][7].const
                     ) {
                         x = newX
@@ -158,12 +158,12 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                     }
                 } else if (newX == 2 && newY == 7) {
                     if (Board.gameBoard[7][3] is Empty && Board.gameBoard[7][2] is Empty && Board.gameBoard[7][1] is Empty &&
-                            !MoveMaker.wrongMove.contains(Pair(3, 7)) && !MoveMaker.wrongMove.contains(
+                            !MoveMaker.underAttack.contains(Pair(3, 7)) && !MoveMaker.underAttack.contains(
                                     Pair(
                                             2,
                                             7
                                     )
-                            ) && !MoveMaker.wrongMove.contains(Pair(4, 7)) && !MoveMaker.wrongMove.contains(
+                            ) && !MoveMaker.underAttack.contains(Pair(4, 7)) && !MoveMaker.underAttack.contains(
                                     Pair(
                                             1,
                                             7
@@ -183,12 +183,12 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
             } else if (color == FigureColor.BLACK && y == 0 && x == 4 && !rock && !const) {
                 if (newX == 6 && newY == 0) {
                     if (Board.gameBoard[0][5] is Empty && Board.gameBoard[0][6] is Empty &&
-                            !MoveMaker.wrongMove.contains(Pair(5, 0)) && !MoveMaker.wrongMove.contains(
+                            !MoveMaker.underAttack.contains(Pair(5, 0)) && !MoveMaker.underAttack.contains(
                                     Pair(
                                             6,
                                             0
                                     )
-                            ) && !MoveMaker.wrongMove.contains(Pair(4, 0)) &&
+                            ) && !MoveMaker.underAttack.contains(Pair(4, 0)) &&
                             Board.gameBoard[0][7].color == FigureColor.BLACK && Board.gameBoard[0][7] is Rook && Board.gameBoard[0][7].const
                     ) {
                         x = newX
@@ -201,12 +201,12 @@ class King(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
                     }
                 } else if (newX == 2 && newY == 0) {
                     if (Board.gameBoard[0][3] is Empty && Board.gameBoard[0][2] is Empty && Board.gameBoard[0][1] is Empty &&
-                            !MoveMaker.wrongMove.contains(Pair(3, 0)) && !MoveMaker.wrongMove.contains(
+                            !MoveMaker.underAttack.contains(Pair(3, 0)) && !MoveMaker.underAttack.contains(
                                     Pair(
                                             2,
                                             0
                                     )
-                            ) && !MoveMaker.wrongMove.contains(Pair(4, 0)) && !MoveMaker.wrongMove.contains(
+                            ) && !MoveMaker.underAttack.contains(Pair(4, 0)) && !MoveMaker.underAttack.contains(
                                     Pair(
                                             1,
                                             0

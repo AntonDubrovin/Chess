@@ -20,12 +20,11 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 
 @SuppressLint("ClickableViewAccessibility")
 class BoardView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    defStyleRes: Int = 0,
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0,
+        defStyleRes: Int = 0,
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
-
     companion object {
         lateinit var instance: BoardView
             private set
@@ -40,7 +39,7 @@ class BoardView @JvmOverloads constructor(
 
     init {
         val a: TypedArray = context.obtainStyledAttributes(
-            attrs, R.styleable.BoardView, defStyleAttr, defStyleRes
+                attrs, R.styleable.BoardView, defStyleAttr, defStyleRes
         )
         moveMaker = MoveMaker(MainActivity.instance.whitePlayer, MainActivity.instance.blackPlayer)
         instance = this
@@ -95,11 +94,11 @@ class BoardView @JvmOverloads constructor(
 
     private fun drawCell(row: Int, column: Int, canvas: Canvas, paint: Paint) {
         canvas.drawRect(
-            ((row - 1) * (width / 8)).toFloat(),
-            ((column - 1) * (width / 8)).toFloat(),
-            (row * ((width / 8))).toFloat(),
-            (column * (width / 8)).toFloat(),
-            paint
+                ((row - 1) * (width / 8)).toFloat(),
+                ((column - 1) * (width / 8)).toFloat(),
+                (row * ((width / 8))).toFloat(),
+                (column * (width / 8)).toFloat(),
+                paint
         )
     }
 
@@ -125,7 +124,7 @@ class BoardView @JvmOverloads constructor(
         for (i in 0..7) {
             for (j in 0..7) {
                 if (Board.gameBoard[i][j] is King && Board.gameBoard[i][j].color == moveMaker.turn) {
-                    drawCell(j+1, i+1, canvas, paintCheck)
+                    drawCell(j + 1, i + 1, canvas, paintCheck)
                     check = false
                 }
             }
@@ -155,9 +154,9 @@ class BoardView @JvmOverloads constructor(
         drawFigures(canvas)
         if (moveMaker.touchX != -1 && moveMaker.touchY != -1) {
             Board.gameBoard[moveMaker.touchY][moveMaker.touchX].showMove(
-                canvas,
-                width,
-                moveMaker.turn
+                    canvas,
+                    width,
+                    moveMaker.turn
             )
         }
     }

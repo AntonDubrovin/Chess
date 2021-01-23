@@ -23,7 +23,6 @@ abstract class AbstractFigure : FigureInterface {
             strokeWidth = 10F
             style = Paint.Style.FILL
         }
-
         val icon = BitmapFactory.decodeResource(
             context.resources,
             picture

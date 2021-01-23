@@ -15,13 +15,11 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 
 @SuppressLint("ClickableViewAccessibility")
 class TimerView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    defStyleRes: Int = 0,
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0,
+        defStyleRes: Int = 0,
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
-
-
     companion object {
         lateinit var instance: TimerView
             private set
@@ -29,16 +27,13 @@ class TimerView @JvmOverloads constructor(
 
     var timeStart = 0L
     var currentTime = 0L
-
-
     private lateinit var timerColor: FigureColor
-
     var timeThis = 300L
 
     init {
         timeStart = System.currentTimeMillis()
         val a: TypedArray = context.obtainStyledAttributes(
-            attrs, R.styleable.TimerView, defStyleAttr, defStyleRes
+                attrs, R.styleable.TimerView, defStyleAttr, defStyleRes
         )
         instance = this
         try {
@@ -72,10 +67,10 @@ class TimerView @JvmOverloads constructor(
         if (seconds.length == 1) {
             seconds = "0$seconds"
         }
-        if(timerColor == FigureColor.BLACK) {
-            canvas.drawText("$minutes:$seconds", width.toFloat()-10, height.toFloat()-10, paintWhite)
+        if (timerColor == FigureColor.BLACK) {
+            canvas.drawText("$minutes:$seconds", width.toFloat() - 10, height.toFloat() - 10, paintWhite)
         } else {
-            canvas.drawText("$minutes:$seconds", width.toFloat()-10, paintWhite.textSize-20, paintWhite)
+            canvas.drawText("$minutes:$seconds", width.toFloat() - 10, paintWhite.textSize - 20, paintWhite)
         }
     }
 

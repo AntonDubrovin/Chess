@@ -10,7 +10,6 @@ import com.example.mygame.player.common.AbstractPlayer
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
     lateinit var whitePlayer: AbstractPlayer
     lateinit var blackPlayer: AbstractPlayer
 

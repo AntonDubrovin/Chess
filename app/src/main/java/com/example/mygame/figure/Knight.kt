@@ -25,44 +25,44 @@ class Knight(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
     override fun moveCell(color_: FigureColor) {
         if (color_ == color) {
             if (y - 2 >= 0 && x + 1 <= 7 && Board.gameBoard[y - 2][x + 1] is Empty) {
-                MoveMaker.wrongMove.add(Pair(x + 1, y - 2))
+                MoveMaker.underAttack.add(Pair(x + 1, y - 2))
             } else if (y - 2 >= 0 && x + 1 <= 7 && Board.gameBoard[y - 2][x + 1] !is Empty) {
-                MoveMaker.wrongMove.add(Pair(x + 1, y - 2))
+                MoveMaker.underAttack.add(Pair(x + 1, y - 2))
             }
             if (y - 1 >= 0 && x + 2 <= 7 && Board.gameBoard[y - 1][x + 2] is Empty) {
-                MoveMaker.wrongMove.add(Pair(x + 2, y - 1))
+                MoveMaker.underAttack.add(Pair(x + 2, y - 1))
             } else if (y - 1 >= 0 && x + 2 <= 7 && Board.gameBoard[y - 1][x + 2] !is Empty) {
-                MoveMaker.wrongMove.add(Pair(x + 2, y - 1))
+                MoveMaker.underAttack.add(Pair(x + 2, y - 1))
             }
             if (y + 1 <= 7 && x + 2 <= 7 && Board.gameBoard[y + 1][x + 2] is Empty) {
-                MoveMaker.wrongMove.add(Pair(x + 2, y + 1))
+                MoveMaker.underAttack.add(Pair(x + 2, y + 1))
             } else if (y + 1 <= 7 && x + 2 <= 7 && Board.gameBoard[y + 1][x + 2] !is Empty) {
-                MoveMaker.wrongMove.add(Pair(x + 2, y + 1))
+                MoveMaker.underAttack.add(Pair(x + 2, y + 1))
             }
             if (y + 2 <= 7 && x + 1 <= 7 && Board.gameBoard[y + 2][x + 1] is Empty) {
-                MoveMaker.wrongMove.add(Pair(x + 1, y + 2))
+                MoveMaker.underAttack.add(Pair(x + 1, y + 2))
             } else if (y + 2 <= 7 && x + 1 <= 7 && Board.gameBoard[y + 2][x + 1] !is Empty) {
-                MoveMaker.wrongMove.add(Pair(x + 1, y + 2))
+                MoveMaker.underAttack.add(Pair(x + 1, y + 2))
             }
             if (y + 2 <= 7 && x - 1 >= 0 && Board.gameBoard[y + 2][x - 1] is Empty) {
-                MoveMaker.wrongMove.add(Pair(x - 1, y + 2))
+                MoveMaker.underAttack.add(Pair(x - 1, y + 2))
             } else if (y + 2 <= 7 && x - 1 >= 0 && Board.gameBoard[y + 2][x - 1] !is Empty) {
-                MoveMaker.wrongMove.add(Pair(x - 1, y + 2))
+                MoveMaker.underAttack.add(Pair(x - 1, y + 2))
             }
             if (y + 1 <= 7 && x - 2 >= 0 && Board.gameBoard[y + 1][x - 2] is Empty) {
-                MoveMaker.wrongMove.add(Pair(x - 2, y + 1))
+                MoveMaker.underAttack.add(Pair(x - 2, y + 1))
             } else if (y + 1 <= 7 && x - 2 >= 0 && Board.gameBoard[y + 1][x - 2] !is Empty) {
-                MoveMaker.wrongMove.add(Pair(x - 2, y + 1))
+                MoveMaker.underAttack.add(Pair(x - 2, y + 1))
             }
             if (y - 1 >= 0 && x - 2 >= 0 && Board.gameBoard[y - 1][x - 2] is Empty) {
-                MoveMaker.wrongMove.add(Pair(x - 2, y - 1))
+                MoveMaker.underAttack.add(Pair(x - 2, y - 1))
             } else if (y - 1 >= 0 && x - 2 >= 0 && Board.gameBoard[y - 1][x - 2] !is Empty) {
-                MoveMaker.wrongMove.add(Pair(x - 2, y - 1))
+                MoveMaker.underAttack.add(Pair(x - 2, y - 1))
             }
             if (y - 2 >= 0 && x - 1 >= 0 && Board.gameBoard[y - 2][x - 1] is Empty) {
-                MoveMaker.wrongMove.add(Pair(x - 1, y - 2))
+                MoveMaker.underAttack.add(Pair(x - 1, y - 2))
             } else if (y - 2 >= 0 && x - 1 >= 0 && Board.gameBoard[y - 2][x - 1] !is Empty) {
-                MoveMaker.wrongMove.add(Pair(x - 1, y - 2))
+                MoveMaker.underAttack.add(Pair(x - 1, y - 2))
             }
         }
     }

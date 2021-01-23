@@ -9,8 +9,6 @@ import com.example.mygame.player.common.AbstractPlayer
 
 class UserPlayer(override var time: Long = 300, override var color: FigureColor) :
         AbstractPlayer() {
-
-
     override val rock: Int = 0
 
     override fun chooseFigure(row: Int, column: Int): AbstractFigure {
