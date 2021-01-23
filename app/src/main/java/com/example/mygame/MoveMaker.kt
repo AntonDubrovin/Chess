@@ -3,6 +3,7 @@ package com.example.mygame
 import com.example.mygame.board.Board
 import com.example.mygame.board.BoardView
 import com.example.mygame.figure.Empty
+import com.example.mygame.figure.King
 import com.example.mygame.figure.common.AbstractFigure
 import com.example.mygame.figure.common.FigureColor
 import com.example.mygame.player.common.AbstractPlayer
@@ -11,6 +12,46 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
 
     companion object {
         var wrongMove: MutableSet<Pair<Int, Int>> = mutableSetOf()
+
+        fun checkChoose(column: Int, dy: Int, row: Int, dx: Int, color: FigureColor): Boolean {
+            val copy = wrongMove
+            val cur = Board.gameBoard[column + dy][row + dx]
+            Board.gameBoard[column + dy][row + dx] = Board.gameBoard[column][row]
+            Board.gameBoard[column][row] = Empty(row, column, FigureColor.EMPTY)
+            wrongMove = mutableSetOf()
+            when (color) {
+                FigureColor.WHITE -> {
+                    findAttack(FigureColor.BLACK)
+                }
+                FigureColor.BLACK -> {
+                    findAttack(FigureColor.WHITE)
+                }
+            }
+            for (i in wrongMove) {
+                if (Board.gameBoard[i.second][i.first] is King && Board.gameBoard[i.second][i.first].color == color) {
+                    Board.gameBoard[column][row] = Board.gameBoard[column + dy][row + dx]
+                    Board.gameBoard[column + dy][row + dx] = cur
+                    BoardView.instance.invalidate()
+                    wrongMove = copy
+                    return false
+                }
+            }
+            Board.gameBoard[column][row] = Board.gameBoard[column + dy][row + dx]
+            Board.gameBoard[column + dy][row + dx] = cur
+            BoardView.instance.invalidate()
+            wrongMove = copy
+            return true
+        }
+
+        private fun findAttack(color: FigureColor) {
+            for (i in 0..7) {
+                for (j in 0..7) {
+                    if (Board.gameBoard[i][j] !is Empty && Board.gameBoard[i][j].color == color) {
+                        Board.gameBoard[i][j].moveCell(color)
+                    }
+                }
+            }
+        }
     }
 
     val white: AbstractPlayer = _white
@@ -21,16 +62,6 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
     var turn = FigureColor.WHITE
     private var flag = false
 
-
-    private fun findAttack(color: FigureColor) {
-        for (i in 0..7) {
-            for (j in 0..7) {
-                if (Board.gameBoard[i][j] !is Empty && Board.gameBoard[i][j].color == color) {
-                    Board.gameBoard[i][j].moveCell(color)
-                }
-            }
-        }
-    }
 
     private fun choose(row: Int, column: Int) {
         when (turn) {
@@ -122,9 +153,6 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
             }
         }
     }
-
-    var timeS: Float = 0f
-    var timeCurrent: Float = 0f
 
     fun makeTurn(row: Int, column: Int) {
         findAttack(notTurn(turn))

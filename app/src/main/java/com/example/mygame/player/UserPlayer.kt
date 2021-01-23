@@ -1,5 +1,6 @@
 package com.example.mygame.player
 
+import com.example.mygame.MoveMaker
 import com.example.mygame.board.Board
 import com.example.mygame.figure.common.FigureColor
 import com.example.mygame.figure.Empty
@@ -7,7 +8,7 @@ import com.example.mygame.figure.common.AbstractFigure
 import com.example.mygame.player.common.AbstractPlayer
 
 class UserPlayer(override var time: Long = 300, override var color: FigureColor) :
-    AbstractPlayer() {
+        AbstractPlayer() {
 
 
     override val rock: Int = 0
@@ -21,6 +22,7 @@ class UserPlayer(override var time: Long = 300, override var color: FigureColor)
     }
 
     override fun moveFigure(currentFigure: AbstractFigure, newX: Int, newY: Int): Boolean {
-        return currentFigure.makeMove(newX, newY, color)
+        return MoveMaker.checkChoose(currentFigure.y, newY - currentFigure.y, currentFigure.x, newX - currentFigure.x, color) &&
+                currentFigure.makeMove(newX, newY, color)
     }
 }
