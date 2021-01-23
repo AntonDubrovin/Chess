@@ -9,13 +9,11 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
 import com.example.mygame.figure.common.FigureColor
 import com.example.mygame.MainActivity
-import com.example.mygame.figure.common.MoveMaker
+import com.example.mygame.MoveMaker
 import com.example.mygame.R
 import com.example.mygame.figure.Empty
-import com.example.mygame.figure.Rook
 import com.example.mygame.figure.common.AbstractFigure
 import kotlinx.android.synthetic.main.activity_main.view.*
 

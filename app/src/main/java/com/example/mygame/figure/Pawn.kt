@@ -3,7 +3,7 @@ package com.example.mygame.figure
 import android.graphics.Canvas
 import com.example.mygame.board.Board
 import com.example.mygame.figure.common.FigureColor
-import com.example.mygame.figure.common.MoveMaker
+import com.example.mygame.MoveMaker
 import com.example.mygame.R
 import com.example.mygame.figure.common.AbstractFigure
 
@@ -24,16 +24,16 @@ class Pawn(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
 
     override fun moveCell(color: FigureColor) {
         if (color == FigureColor.WHITE && x - 1 >= 0) {
-            MoveMaker.st.add(Pair(x - 1, y - 1))
+            MoveMaker.wrongMove.add(Pair(x - 1, y - 1))
         }
         if (color == FigureColor.WHITE && x + 1 <= 7) {
-            MoveMaker.st.add(Pair(x + 1, y - 1))
+            MoveMaker.wrongMove.add(Pair(x + 1, y - 1))
         }
         if (color == FigureColor.BLACK && x - 1 >= 0) {
-            MoveMaker.st.add(Pair(x - 1, y + 1))
+            MoveMaker.wrongMove.add(Pair(x - 1, y + 1))
         }
         if (color == FigureColor.BLACK && x + 1 <= 7) {
-            MoveMaker.st.add(Pair(x + 1, y + 1))
+            MoveMaker.wrongMove.add(Pair(x + 1, y + 1))
         }
     }
 

@@ -4,7 +4,7 @@ package com.example.mygame.figure
 import android.graphics.Canvas
 import com.example.mygame.board.Board
 import com.example.mygame.figure.common.FigureColor
-import com.example.mygame.figure.common.MoveMaker
+import com.example.mygame.MoveMaker
 import com.example.mygame.R
 import com.example.mygame.figure.common.AbstractFigure
 
@@ -27,35 +27,35 @@ class Rook(_x: Int, _y: Int, _color: FigureColor) : AbstractFigure() {
         if (color_ == color) {
             var dx = 1
             while (x + dx <= 7 && Board.gameBoard[y][x + dx] is Empty) {
-                MoveMaker.st.add(Pair(x + dx, y))
+                MoveMaker.wrongMove.add(Pair(x + dx, y))
                 dx++
             }
             if (x + dx <= 7) {
-                MoveMaker.st.add(Pair(x + dx, y))
+                MoveMaker.wrongMove.add(Pair(x + dx, y))
             }
             dx = -1
             while (x + dx >= 0 && Board.gameBoard[y][x + dx] is Empty) {
-                MoveMaker.st.add(Pair(x + dx, y))
+                MoveMaker.wrongMove.add(Pair(x + dx, y))
                 dx--
             }
             if (x + dx >= 0) {
-                MoveMaker.st.add(Pair(x + dx, y))
+                MoveMaker.wrongMove.add(Pair(x + dx, y))
             }
             var dy = 1
             while (y + dy <= 7 && Board.gameBoard[y + dy][x] is Empty) {
-                MoveMaker.st.add(Pair(x, y + dy))
+                MoveMaker.wrongMove.add(Pair(x, y + dy))
                 dy++
             }
             if (y + dy <= 7) {
-                MoveMaker.st.add(Pair(x, y + dy))
+                MoveMaker.wrongMove.add(Pair(x, y + dy))
             }
             dy = -1
             while (y + dy >= 0 && Board.gameBoard[y + dy][x] is Empty) {
-                MoveMaker.st.add(Pair(x, y + dy))
+                MoveMaker.wrongMove.add(Pair(x, y + dy))
                 dy--
             }
             if (y + dy >= 0) {
-                MoveMaker.st.add(Pair(x, y + dy))
+                MoveMaker.wrongMove.add(Pair(x, y + dy))
             }
         }
     }

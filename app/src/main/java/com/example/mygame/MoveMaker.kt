@@ -1,19 +1,17 @@
-package com.example.mygame.figure.common
+package com.example.mygame
 
-import com.example.mygame.MainActivity
 import com.example.mygame.board.Board
 import com.example.mygame.board.BoardView
 import com.example.mygame.figure.Empty
+import com.example.mygame.figure.common.AbstractFigure
+import com.example.mygame.figure.common.FigureColor
 import com.example.mygame.player.common.AbstractPlayer
-import kotlin.math.floor
 
 class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
 
     companion object {
-
-        var st: MutableSet<Pair<Int, Int>> = mutableSetOf()
+        var wrongMove: MutableSet<Pair<Int, Int>> = mutableSetOf()
     }
-
 
     val white: AbstractPlayer = _white
     val black: AbstractPlayer = _black
@@ -22,8 +20,6 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
     private var currentFigure: AbstractFigure = Empty(-1, -1, FigureColor.EMPTY)
     var turn = FigureColor.WHITE
     private var flag = false
-
-
 
 
     private fun findAttack(color: FigureColor) {
@@ -63,7 +59,7 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                 FigureColor.WHITE -> {
                     if (white.moveFigure(currentFigure, row, column)) {
                         Board.gameBoard[touchY][touchX] =
-                            Empty(touchX, touchY, FigureColor.EMPTY)
+                                Empty(touchX, touchY, FigureColor.EMPTY)
                         Board.gameBoard[column][row] = currentFigure
                         touchX = -1
                         touchY = -1
@@ -71,14 +67,14 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                         BoardView.instance.y = -1
                         changeTurn(turn)
                         flag = false
-                        st = mutableSetOf()
+                        wrongMove = mutableSetOf()
                         BoardView.instance.invalidate()
                     }
                 }
                 FigureColor.BLACK -> {
                     if (black.moveFigure(currentFigure, row, column)) {
                         Board.gameBoard[touchY][touchX] =
-                            Empty(touchX, touchY, FigureColor.EMPTY)
+                                Empty(touchX, touchY, FigureColor.EMPTY)
                         Board.gameBoard[column][row] = currentFigure
                         touchX = -1
                         touchY = -1
@@ -86,7 +82,7 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                         BoardView.instance.x = -1
                         BoardView.instance.y = -1
                         flag = false
-                        st = mutableSetOf()
+                        wrongMove = mutableSetOf()
                         BoardView.instance.invalidate()
                     }
 
