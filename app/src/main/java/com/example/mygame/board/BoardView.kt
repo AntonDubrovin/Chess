@@ -30,6 +30,7 @@ class BoardView @JvmOverloads constructor(
             private set
     }
 
+    lateinit var canv : Canvas
     var check = false
     private var count = 0
     var turn: FigureColor = FigureColor.WHITE
@@ -48,8 +49,6 @@ class BoardView @JvmOverloads constructor(
             board.setOnTouchListener { _, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        println(event.x)
-                        println(event.y)
                         moveMaker.makeTurn(transpose(event.x), transpose(event.y))
                     }
                 }
@@ -129,7 +128,6 @@ class BoardView @JvmOverloads constructor(
             for (j in 0..7) {
                 if (Board.gameBoard[i][j] is King && Board.gameBoard[i][j].color == moveMaker.turn) {
                     drawCell(j + 1, i + 1, canvas, paintCheck)
-                    check = false
                 }
             }
         }
@@ -137,14 +135,15 @@ class BoardView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
+        canv = canvas
         super.onDraw(canvas)
         count++
         for (i in 1..8) {
             for (j in 1..8) {
                 if ((i + j) % 2 == 0) {
-                    drawCell(i, j, canvas, paintBlack)
-                } else {
                     drawCell(i, j, canvas, paintWhite)
+                } else {
+                    drawCell(i, j, canvas, paintBlack)
                 }
             }
         }

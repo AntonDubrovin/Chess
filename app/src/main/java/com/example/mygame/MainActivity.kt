@@ -32,4 +32,8 @@ class MainActivity : AppCompatActivity() {
         board.layoutParams = par
     }
 
+    fun stopGame(){
+        board.isEnabled = false
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.mygame
 
+import android.widget.Toast
 import com.example.mygame.board.Board
 import com.example.mygame.board.BoardView
 import com.example.mygame.figure.Empty
@@ -7,9 +8,19 @@ import com.example.mygame.figure.King
 import com.example.mygame.figure.common.AbstractFigure
 import com.example.mygame.figure.common.FigureColor
 import com.example.mygame.player.common.AbstractPlayer
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
     companion object {
+
+        var isGame = true
+
+        var countBlack = 0
+        var countWhite = 0
+
+        var countColor = FigureColor.WHITE
+        var isDraw = true
+
         var underAttack: MutableSet<Pair<Int, Int>> = mutableSetOf()
 
         fun checkChoose(column: Int, dy: Int, row: Int, dx: Int, color: FigureColor): Boolean {
@@ -53,6 +64,7 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
         }
     }
 
+
     val white: AbstractPlayer = _white
     val black: AbstractPlayer = _black
     var touchX: Int = -1
@@ -85,16 +97,16 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
 
     private fun moveFigureCommon(column: Int, row: Int) {
         Board.gameBoard[touchY][touchX] =
-                Empty(touchX, touchY, FigureColor.EMPTY)
+            Empty(touchX, touchY, FigureColor.EMPTY)
         Board.gameBoard[column][row] = currentFigure
         touchX = -1
         touchY = -1
-        changeTurn(turn)
         BoardView.instance.x = -1
         BoardView.instance.y = -1
         flag = false
         underAttack = mutableSetOf()
         checkCheck(turn)
+        changeTurn(turn)
         BoardView.instance.invalidate()
     }
 
@@ -127,11 +139,46 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
     }
 
     private fun changeTurn(turn: FigureColor) {
+
+        countBlack = 0
+        countWhite = 0
         if (turn == FigureColor.WHITE) {
             this.turn = FigureColor.BLACK
         } else {
             this.turn = FigureColor.WHITE
         }
+        isDraw = false
+        countColor = this.turn
+        for (i in 0..7) {
+            for (j in 0..7) {
+                if (Board.gameBoard[i][j] !is Empty && Board.gameBoard[i][j].color == this.turn) {
+                    Board.gameBoard[i][j].showMove(BoardView.instance.canv, 0, this.turn)
+                }
+            }
+        }
+
+        if (this.turn == FigureColor.WHITE) {
+            if (countWhite == 0) {
+                if(BoardView.instance.check) {
+                    Toast.makeText(MainActivity.instance.baseContext,"~BLACK WINS~",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(BoardView.instance.context,"~DRAW~",Toast.LENGTH_LONG).show()
+                }
+                isGame = false
+                MainActivity.instance.stopGame()
+            }
+        } else if(this.turn == FigureColor.BLACK){
+            if(countBlack == 0){
+                if(BoardView.instance.check){
+                    Toast.makeText(BoardView.instance.context,"~WHITE WINS~",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(BoardView.instance.context,"~DRAW~",Toast.LENGTH_LONG).show()
+                }
+                isGame = false
+                MainActivity.instance.stopGame()
+            }
+        }
+        isDraw = true
     }
 
     private fun notTurn(turn: FigureColor): FigureColor {
@@ -157,12 +204,14 @@ class MoveMaker(_white: AbstractPlayer, _black: AbstractPlayer) {
                 moveFigure(row, column)
             }
         }
+
     }
 
     private fun checkCheck(color: FigureColor) {
-        findAttack(notTurn(color))
+        BoardView.instance.check = false
+        findAttack(color)
         for (i in underAttack) {
-            if (Board.gameBoard[i.second][i.first] is King && Board.gameBoard[i.second][i.first].color == color) {
+            if (Board.gameBoard[i.second][i.first] is King && Board.gameBoard[i.second][i.first].color != color) {
                 BoardView.instance.check = true
                 BoardView.instance.invalidate()
             }

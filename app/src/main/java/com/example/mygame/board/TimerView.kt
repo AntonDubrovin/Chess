@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.example.mygame.MoveMaker
 import com.example.mygame.R
 import com.example.mygame.figure.common.FigureColor
 import kotlinx.android.synthetic.main.activity_main.view.*
@@ -80,7 +81,7 @@ class TimerView @JvmOverloads constructor(
 
         when (BoardView.instance.moveMaker.turn) {
             timerColor -> {
-                if (currentTime - timeStart > 1000) {
+                if (currentTime - timeStart > 1000 && MoveMaker.isGame) {
                     timeThis -= 1
                     timeStart = currentTime
                 }
